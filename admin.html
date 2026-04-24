@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <title>Admin Dashboard - Landcity Properties</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-logo">
+                <img src="assets/logo.jpeg" alt="Logo" class="sidebar-logo-img">
+                <span>Landcity<span>.</span></span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="sidebar-user">
+            <img src="assets/logo.jpeg" alt="Admin" class="user-avatar">
+            <div class="user-info">
+                <strong id="adminUsername">Admin User</strong>
+                <span>Administrator</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="#" class="nav-link active" data-page="dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="properties">
+                        <i class="fas fa-building"></i>
+                        <span>Properties</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="inquiries">
+                        <i class="fas fa-envelope"></i>
+                        <span>Inquiries</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="clients">
+                        <i class="fas fa-users"></i>
+                        <span>Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="sidebar-divider"></li>
+                <li>
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-globe"></i>
+                        <span>View Website</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Admin Main Content -->
+    <main class="admin-main">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="admin-header-left">
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="pageTitle">Dashboard</h2>
+            </div>
+            <div class="admin-header-right">
+                <div class="admin-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="admin-notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="admin-profile">
+                    <img src="assets/logo.jpeg" alt="Admin">
+                    <span id="headerUsername">Admin</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="admin-content" id="adminContent">
+            <!-- Dashboard Page -->
+            <div class="page active" id="dashboard-page">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #e3f2fd;">
+                            <i class="fas fa-home" style="color: #1976d2;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>124</h3>
+                            <p>Total Properties</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #e8f5e9;">
+                            <i class="fas fa-check-circle" style="color: #388e3c;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>89</h3>
+                            <p>Sold Properties</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fff3e0;">
+                            <i class="fas fa-clock" style="color: #f57c00;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>35</h3>
+                            <p>Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fce4ec;">
+                            <i class="fas fa-envelope" style="color: #c62828;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>12</h3>
+                            <p>New Inquiries</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3>Recent Inquiries</h3>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Musa Abdullahi</td>
+                                        <td>musa@email.com</td>
+                                        <td>Apr 20, 2026</td>
+                                        <td><span class="status new">New</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fatima Bello</td>
+                                        <td>fatima@email.com</td>
+                                        <td>Apr 19, 2026</td>
+                                        <td><span class="status pending">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ibrahim Kabiru</td>
+                                        <td>ibrahim@email.com</td>
+                                        <td>Apr 18, 2026</td>
+                                        <td><span class="status resolved">Resolved</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="btn btn-primary"><i class="fas fa-plus"></i> Add Property</button>
+                            <button class="btn btn-outline"><i class="fas fa-file-export"></i> Export Data</button>
+                            <button class="btn btn-outline"><i class="fas fa-cog"></i> Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Page -->
+            <div class="page" id="properties-page">
+                <div class="page-header">
+                    <h3>Properties Management</h3>
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Add New Property</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Property Name</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#001</td>
+                                <td>Residential Plot</td>
+                                <td>Maiduguri Road</td>
+                                <td>₦5,000,000</td>
+                                <td><span class="status new">Available</span></td>
+                                <td>
+                                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#002</td>
+                                <td>Modern Home</td>
+                                <td>Rahama Complex</td>
+                                <td>₦15,000,000</td>
+                                <td><span class="status resolved">Sold</span></td>
+                                <td>
+                                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inquiries Page -->
+            <div class="page" id="inquiries-page">
+                <div class="page-header">
+                    <h3>Client Inquiries</h3>
+                </div>
+                <p>View and respond to client messages here.</p>
+            </div>
+
+            <!-- Clients Page -->
+            <div class="page" id="clients-page">
+                <div class="page-header">
+                    <h3>Our Clients</h3>
+                </div>
+                <p>Client database and management.</p>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page" id="settings-page">
+                <div class="page-header">
+                    <h3>Settings</h3>
+                </div>
+                <p>Admin panel configurations.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
