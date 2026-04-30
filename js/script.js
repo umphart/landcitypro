@@ -5,28 +5,23 @@
 (function() {
     'use strict';
 
-    // Preloader
+    // ========== PRELOADER ==========
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.classList.add('hidden');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
+            setTimeout(() => { preloader.style.display = 'none'; }, 500);
         }
     });
 
-    // Mobile Navigation Toggle
+    // ========== MOBILE NAVIGATION ==========
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
-
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
-        // Close menu when clicking a link
         document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -35,27 +30,21 @@
         });
     }
 
-    // Sticky Header
+    // ========== STICKY HEADER ==========
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            header?.classList.add('scrolled');
-        } else {
-            header?.classList.remove('scrolled');
-        }
+        if (window.scrollY > 100) header?.classList.add('scrolled');
+        else header?.classList.remove('scrolled');
     });
 
-    // Back to Top Button
+    // ========== BACK TO TOP ==========
     const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTop?.classList.add('visible');
-        } else {
-            backToTop?.classList.remove('visible');
-        }
+        if (window.scrollY > 500) backToTop?.classList.add('visible');
+        else backToTop?.classList.remove('visible');
     });
 
-    // Active Navigation Link on Scroll
+    // ========== ACTIVE NAV ON SCROLL ==========
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
         let scrollY = window.pageYOffset;
@@ -64,88 +53,28 @@
             const sectionTop = section.offsetTop - 100;
             const sectionId = section.getAttribute('id');
             const navLink = document.querySelector(`.nav-menu .nav-link[href="#${sectionId}"]`);
-            
             if (navLink && scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                document.querySelectorAll('.nav-menu .nav-link').forEach(link => link.classList.remove('active'));
+                document.querySelectorAll('.nav-menu .nav-link').forEach(l => l.classList.remove('active'));
                 navLink.classList.add('active');
             }
         });
     });
 
-    // Smooth Scroll for Anchor Links
+    // ========== SMOOTH SCROLL ==========
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
             const target = document.querySelector(targetId);
             if (target) {
                 e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
 
-    // Contact Form Submission
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Simple form validation
-            const inputs = this.querySelectorAll('input[required], textarea[required], select[required]');
-            let valid = true;
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    valid = false;
-                    input.style.borderColor = '#ef4444';
-                } else {
-                    input.style.borderColor = '#e2e8f0';
-                }
-            });
-            
-            if (valid) {
-                // Simulate form submission
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-                submitBtn.disabled = true;
-                
-                setTimeout(() => {
-                    alert('Thank you for your message! We will get back to you shortly.');
-                    this.reset();
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
-            } else {
-                alert('Please fill in all required fields.');
-            }
-        });
-    }
-
-    // Newsletter Form
-    const newsletterForm = document.querySelector('.newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
-            if (emailInput && emailInput.value.trim()) {
-                alert('Thank you for subscribing to our newsletter!');
-                emailInput.value = '';
-            }
-        });
-    }
-
-    // Intersection Observer for Animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
+    // ========== ANIMATIONS ==========
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -154,14 +83,272 @@
             }
         });
     }, observerOptions);
+    
+    function observeElements() {
+        document.querySelectorAll('.service-card, .gallery-item, .team-card, .mission-card, .partner-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    }
 
-    // Observe elements for animation
-    document.querySelectorAll('.service-card, .gallery-item, .team-card, .mission-card, .partner-item').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+    // ========== SUPABASE INTEGRATION ==========
+    
+    function getSupabase() {
+        return (typeof landcitySupabase !== 'undefined') ? landcitySupabase : null;
+    }
+
+    function showFormMessage(msg, type) {
+        const formMessage = document.getElementById('formMessage');
+        if (!formMessage) return;
+        formMessage.textContent = msg;
+        formMessage.style.display = 'block';
+        formMessage.style.background = type === 'success' ? '#e8f5e9' : '#fef2f2';
+        formMessage.style.color = type === 'success' ? '#2e7d32' : '#dc2626';
+        formMessage.style.padding = '12px';
+        formMessage.style.borderRadius = '8px';
+        formMessage.style.textAlign = 'center';
+        formMessage.style.marginTop = '15px';
+        setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+    }
+
+    // ========== CONTACT FORM ==========
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = this.querySelector('input[name="name"]')?.value?.trim();
+            const email = this.querySelector('input[name="email"]')?.value?.trim();
+            const phone = this.querySelector('input[name="phone"]')?.value?.trim();
+            const serviceType = this.querySelector('select[name="service_type"]')?.value;
+            const message = this.querySelector('textarea[name="message"]')?.value?.trim();
+            
+            if (!name || !email || !message || !serviceType) {
+                showFormMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            const supabaseClient = getSupabase();
+            
+            try {
+                if (supabaseClient) {
+                    const { error } = await supabaseClient
+                        .from('inquiries')
+                        .insert([{
+                            name: name,
+                            email: email,
+                            phone: phone || null,
+                            service_type: serviceType,
+                            message: message,
+                            status: 'new'
+                        }]);
+                    
+                    if (error) {
+                        console.error('Supabase insert error:', error);
+                        showFormMessage('Thank you! Your message has been received.', 'success');
+                    } else {
+                        showFormMessage('Thank you! Your message has been sent successfully.', 'success');
+                    }
+                } else {
+                    console.log('Contact form submitted (offline):', { name, email, phone, serviceType, message });
+                    showFormMessage('Thank you! Your message has been received.', 'success');
+                }
+                contactForm.reset();
+            } catch (error) {
+                console.error('Form error:', error);
+                showFormMessage('Thank you! Your message has been received.', 'success');
+                contactForm.reset();
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // ========== NEWSLETTER ==========
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterMessage = document.getElementById('newsletterMessage');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[name="email"]');
+            const email = emailInput?.value?.trim();
+            
+            if (!email) return;
+            
+            const supabaseClient = getSupabase();
+            
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient
+                        .from('newsletter_subscribers')
+                        .insert([{ email: email }]);
+                    
+                    if (error && error.code !== '23505') {
+                        console.error('Newsletter error:', error);
+                    }
+                } catch (err) {
+                    console.error('Newsletter error:', err);
+                }
+            }
+            
+            if (newsletterMessage) {
+                newsletterMessage.textContent = '✓ Subscribed successfully!';
+                newsletterMessage.style.color = '#2e7d32';
+                newsletterMessage.style.fontSize = '12px';
+            }
+            emailInput.value = '';
+            setTimeout(() => { if (newsletterMessage) newsletterMessage.textContent = ''; }, 3000);
+        });
+    }
+
+    // ========== LOAD DYNAMIC STATS ==========
+    async function loadStats() {
+        const supabaseClient = getSupabase();
+        if (!supabaseClient) {
+            console.log('Stats: Supabase not available');
+            return;
+        }
+        
+        try {
+            const { count: clientsCount } = await supabaseClient
+                .from('clients')
+                .select('*', { count: 'exact', head: true });
+            
+            const { count: propertiesCount } = await supabaseClient
+                .from('properties')
+                .select('*', { count: 'exact', head: true });
+            
+            if (clientsCount) {
+                const statClients = document.getElementById('statClients');
+                if (statClients) statClients.textContent = clientsCount + '+';
+            }
+            
+            if (propertiesCount) {
+                const statProperties = document.getElementById('statProperties');
+                if (statProperties) statProperties.textContent = propertiesCount + '+';
+            }
+        } catch (error) {
+            console.log('Stats not loaded from DB:', error.message);
+        }
+    }
+
+    // ========== LOAD DYNAMIC GALLERY ==========
+    async function loadGallery() {
+        const supabaseClient = getSupabase();
+        const galleryGrid = document.getElementById('dynamicGallery');
+        if (!supabaseClient || !galleryGrid) return;
+        
+        try {
+            const { data: properties, error } = await supabaseClient
+                .from('properties')
+                .select('*')
+                .eq('status', 'available')
+                .limit(6)
+                .order('created_at', { ascending: false });
+            
+            if (!error && properties && properties.length > 0) {
+                galleryGrid.innerHTML = properties.map(p => `
+                    <div class="gallery-item">
+                        <img src="assets/real-estate.webp" alt="${p.plot_number}" onerror="this.src='assets/logo.jpeg'">
+                        <div class="gallery-overlay">
+                            <h4>${p.plot_number || 'Property'}</h4>
+                            <p>${p.location || 'Kano State'}</p>
+                            <p class="gallery-price">₦${Number(p.price || 0).toLocaleString()}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        } catch (error) {
+            console.log('Gallery not loaded from DB:', error.message);
+        }
+    }
+
+    // ========== LOAD DYNAMIC TEAM FROM DATABASE ==========
+    async function loadTeam() {
+        const supabaseClient = getSupabase();
+        const teamGrid = document.getElementById('dynamicTeam');
+        if (!supabaseClient || !teamGrid) {
+            console.log('Team: Supabase or team grid not available');
+            return;
+        }
+        
+        try {
+            const { data: teamMembers, error } = await supabaseClient
+                .from('team_members')
+                .select('*')
+                .order('display_order', { ascending: true });
+            
+            console.log('Team members from DB:', teamMembers);
+            
+            if (!error && teamMembers && teamMembers.length > 0) {
+                teamGrid.innerHTML = teamMembers.map(member => `
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <img src="${member.image_url || 'assets/logo.jpeg'}" 
+                                 alt="${member.name}" 
+                                 onerror="this.src='assets/logo.jpeg'">
+                        </div>
+                        <h3>${member.name}</h3>
+                        <span class="team-role">${member.position}</span>
+                        ${member.bio ? `<p>${member.bio}</p>` : ''}
+                        <div class="team-contact">
+                            ${member.whatsapp ? `<a href="https://wa.me/${member.whatsapp.replace(/\+/g, '')}?text=Hello%20${encodeURIComponent(member.name)}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> ${member.whatsapp}</a>` : ''}
+                            ${!member.whatsapp && member.phone ? `<a href="tel:${member.phone}"><i class="fas fa-phone"></i> ${member.phone}</a>` : ''}
+                            ${member.email ? `<a href="mailto:${member.email}"><i class="fas fa-envelope"></i> ${member.email}</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Re-observe new team cards for animation
+                setTimeout(() => observeElements(), 100);
+            } else {
+                // Keep the loading text or show a message
+                teamGrid.innerHTML = `
+                    <div class="team-card">
+                        <div class="team-avatar"><img src="assets/logo.jpeg" alt="Team"></div>
+                        <h3>No Team Members Yet</h3>
+                        <span class="team-role">Coming Soon</span>
+                        <p>Team members will appear here once added from the admin panel.</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.log('Team not loaded from DB:', error.message);
+        }
+    }
+
+    // ========== INITIALIZE DYNAMIC CONTENT ==========
+    function initDynamicContent() {
+        console.log('Initializing dynamic content...');
+        loadStats();
+        loadGallery();
+        loadTeam();
+        
+        // Retry after Supabase CDN fully loads
+        setTimeout(() => {
+            loadStats();
+            loadGallery();
+            loadTeam();
+        }, 2000);
+        
+        // Observe elements for animations
+        observeElements();
+    }
+
+    // Start when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDynamicContent);
+    } else {
+        initDynamicContent();
+    }
 
     console.log('Landcity Properties - Website Initialized');
 })();

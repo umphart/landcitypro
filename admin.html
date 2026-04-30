@@ -19,139 +19,102 @@
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body class="admin-body">
-    <!-- Admin Sidebar -->
-    <aside class="admin-sidebar" id="adminSidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="sidebar-logo">
-                <img src="assets/logo.jpeg" alt="Logo" class="sidebar-logo-img">
-                <span>Landcity<span>.</span></span>
-            </a>
-            <button class="sidebar-toggle" id="sidebarToggle">
+<!-- Admin Sidebar -->
+<aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header">
+        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="#" class="nav-link active" data-page="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
+            <li><a href="#" class="nav-link" data-page="properties"><i class="fas fa-building"></i><span>Properties</span></a></li>
+            <li><a href="#" class="nav-link" data-page="clients"><i class="fas fa-users"></i><span>Clients</span></a></li>
+            <li><a href="#" class="nav-link" data-page="payments"><i class="fas fa-money-bill-wave"></i><span>Payments</span></a></li>
+            <li><a href="#" class="nav-link" data-page="inquiries"><i class="fas fa-envelope"></i><span>Inquiries</span></a></li>
+            <li><a href="#" class="nav-link" data-page="team"><i class="fas fa-user-tie"></i><span>Team</span></a></li>
+            <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+            <li class="sidebar-divider"></li>
+            <li><a href="#" class="nav-link" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+            <li><a href="index.html" class="nav-link"><i class="fas fa-globe"></i><span>View Website</span></a></li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- Sidebar Overlay for Mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<main class="admin-main">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-left">
+            <button class="mobile-toggle" id="mobileToggle">
                 <i class="fas fa-bars"></i>
             </button>
+            <div class="header-brand">
+                <img src="assets/logo.jpeg" alt="Logo" class="header-logo">
+                <div>
+                    <h2 id="pageTitle">Dashboard</h2>
+                    <span class="header-subtitle">Landcity Properties Admin</span>
+                </div>
+            </div>
         </div>
-        <div class="sidebar-user">
-            <img src="assets/logo.jpeg" alt="Admin" class="user-avatar">
-            <div class="user-info">
-                <strong id="adminUsername">Admin User</strong>
-                <span>Administrator</span>
+        <div class="admin-header-right">
+            <button class="header-btn" onclick="location.reload()" title="Refresh">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <a href="index.html" class="header-btn" title="View Website">
+                <i class="fas fa-globe"></i>
+            </a>
+            <div class="header-divider"></div>
+            <div class="admin-profile">
+                <div class="profile-avatar">
+                    <span id="profileInitial">A</span>
+                </div>
+                <div class="profile-info">
+                    <span id="headerUsername" class="profile-name">Admin</span>
+                    <span class="profile-role">Administrator</span>
+                </div>
             </div>
         </div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li>
-                    <a href="#" class="nav-link active" data-page="dashboard">
-                        <i class="fas fa-th-large"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link" data-page="properties">
-                        <i class="fas fa-building"></i>
-                        <span>Properties</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link" data-page="inquiries">
-                        <i class="fas fa-envelope"></i>
-                        <span>Inquiries</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link" data-page="clients">
-                        <i class="fas fa-users"></i>
-                        <span>Clients</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link" data-page="settings">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-                <li class="sidebar-divider"></li>
-                <li>
-                    <a href="#" class="nav-link" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html" class="nav-link">
-                        <i class="fas fa-globe"></i>
-                        <span>View Website</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+    </header>
 
-    <!-- Admin Main Content -->
-    <main class="admin-main">
-        <!-- Admin Header -->
-        <header class="admin-header">
-            <div class="admin-header-left">
-                <button class="mobile-toggle" id="mobileToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h2 id="pageTitle">Dashboard</h2>
-            </div>
-            <div class="admin-header-right">
-                <div class="admin-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search...">
-                </div>
-                <div class="admin-notifications">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
-                </div>
-                <div class="admin-profile">
-                    <img src="assets/logo.jpeg" alt="Admin">
-                    <span id="headerUsername">Admin</span>
-                </div>
-            </div>
-        </header>
 
-        <!-- Dashboard Content -->
+        <!-- Admin Content -->
         <div class="admin-content" id="adminContent">
-            <!-- Dashboard Page -->
+            
+            <!-- ==================== DASHBOARD PAGE ==================== -->
             <div class="page active" id="dashboard-page">
-                <div class="stats-grid">
+                <div class="stats-grid" id="dashboardStats">
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #e3f2fd;">
-                            <i class="fas fa-home" style="color: #1976d2;"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>124</h3>
-                            <p>Total Properties</p>
-                        </div>
+                        <div class="stat-icon" style="background:#e3f2fd"><i class="fas fa-home" style="color:#1976d2"></i></div>
+                        <div class="stat-info"><h3 id="dashTotalProperties">-</h3><p>Total Properties</p></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #e8f5e9;">
-                            <i class="fas fa-check-circle" style="color: #388e3c;"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>89</h3>
-                            <p>Sold Properties</p>
-                        </div>
+                        <div class="stat-icon" style="background:#e8f5e9"><i class="fas fa-check-circle" style="color:#388e3c"></i></div>
+                        <div class="stat-info"><h3 id="dashSoldProperties">-</h3><p>Sold</p></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #fff3e0;">
-                            <i class="fas fa-clock" style="color: #f57c00;"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>35</h3>
-                            <p>Available</p>
-                        </div>
+                        <div class="stat-icon" style="background:#fff3e0"><i class="fas fa-clock" style="color:#f57c00"></i></div>
+                        <div class="stat-info"><h3 id="dashAvailable">-</h3><p>Available</p></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #fce4ec;">
-                            <i class="fas fa-envelope" style="color: #c62828;"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>12</h3>
-                            <p>New Inquiries</p>
-                        </div>
+                        <div class="stat-icon" style="background:#f3e5f5"><i class="fas fa-users" style="color:#7b1fa2"></i></div>
+                        <div class="stat-info"><h3 id="dashTotalClients">-</h3><p>Total Clients</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:#ecfdf5"><i class="fas fa-money-bill-wave" style="color:#059669"></i></div>
+                        <div class="stat-info"><h3 id="dashRevenue">-</h3><p>Revenue</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:#fce4ec"><i class="fas fa-envelope" style="color:#c62828"></i></div>
+                        <div class="stat-info"><h3 id="dashInquiries">-</h3><p>New Inquiries</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:#fff3e0"><i class="fas fa-hourglass-half" style="color:#f57c00"></i></div>
+                        <div class="stat-info"><h3 id="dashPending">-</h3><p>Pending</p></div>
                     </div>
                 </div>
 
@@ -160,120 +123,209 @@
                         <h3>Recent Inquiries</h3>
                         <div class="table-responsive">
                             <table class="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Musa Abdullahi</td>
-                                        <td>musa@email.com</td>
-                                        <td>Apr 20, 2026</td>
-                                        <td><span class="status new">New</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fatima Bello</td>
-                                        <td>fatima@email.com</td>
-                                        <td>Apr 19, 2026</td>
-                                        <td><span class="status pending">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ibrahim Kabiru</td>
-                                        <td>ibrahim@email.com</td>
-                                        <td>Apr 18, 2026</td>
-                                        <td><span class="status resolved">Resolved</span></td>
-                                    </tr>
-                                </tbody>
+                                <thead><tr><th>Name</th><th>Email</th><th>Date</th><th>Status</th></tr></thead>
+                                <tbody id="recentInquiries"><tr><td colspan="4">Loading...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
                     <div class="admin-card">
                         <h3>Quick Actions</h3>
                         <div class="quick-actions">
-                            <button class="btn btn-primary"><i class="fas fa-plus"></i> Add Property</button>
-                            <button class="btn btn-outline"><i class="fas fa-file-export"></i> Export Data</button>
-                            <button class="btn btn-outline"><i class="fas fa-cog"></i> Settings</button>
+                            <button class="btn btn-primary" onclick="navigateTo('properties')"><i class="fas fa-plus"></i> Add Property</button>
+                            <button class="btn btn-primary" onclick="navigateTo('team')"><i class="fas fa-user-plus"></i> Add Team Member</button>
+                            <a href="index.html" class="btn btn-outline"><i class="fas fa-globe"></i> View Website</a>
+                            <button class="btn btn-outline" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh Data</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Properties Page -->
+            <!-- ==================== PROPERTIES PAGE ==================== -->
             <div class="page" id="properties-page">
                 <div class="page-header">
                     <h3>Properties Management</h3>
-                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Add New Property</button>
+                    <button class="btn btn-primary" onclick="window.showPropertyForm()"><i class="fas fa-plus"></i> Add Property</button>
                 </div>
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Property Name</th>
-                                <th>Location</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
+                            <tr><th>Plot No.</th><th>Type</th><th>Layout</th><th>Size</th><th>Location</th><th>Price</th><th>Status</th><th>Buyer</th><th>Actions</th></tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>#001</td>
-                                <td>Residential Plot</td>
-                                <td>Maiduguri Road</td>
-                                <td>₦5,000,000</td>
-                                <td><span class="status new">Available</span></td>
-                                <td>
-                                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-icon"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#002</td>
-                                <td>Modern Home</td>
-                                <td>Rahama Complex</td>
-                                <td>₦15,000,000</td>
-                                <td><span class="status resolved">Sold</span></td>
-                                <td>
-                                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-icon"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="propertiesTable"><tr><td colspan="9">Loading...</td></tr></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Inquiries Page -->
-            <div class="page" id="inquiries-page">
-                <div class="page-header">
-                    <h3>Client Inquiries</h3>
-                </div>
-                <p>View and respond to client messages here.</p>
-            </div>
-
-            <!-- Clients Page -->
+            <!-- ==================== CLIENTS PAGE ==================== -->
             <div class="page" id="clients-page">
-                <div class="page-header">
-                    <h3>Our Clients</h3>
+                <div class="page-header"><h3>Clients Management</h3></div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Name</th><th>Phone</th><th>Plot No.</th><th>Size</th><th>Price</th><th>Paid</th><th>Balance</th><th>Plan</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="clientsTable"><tr><td colspan="9">Loading...</td></tr></tbody>
+                    </table>
                 </div>
-                <p>Client database and management.</p>
             </div>
 
-            <!-- Settings Page -->
-            <div class="page" id="settings-page">
-                <div class="page-header">
-                    <h3>Settings</h3>
+            <!-- ==================== PAYMENTS PAGE ==================== -->
+            <div class="page" id="payments-page">
+                <div class="page-header"><h3>Payment Records</h3></div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Date</th><th>Client</th><th>Phone</th><th>Plot No.</th><th>Type</th><th>Method</th><th>Amount</th><th>Balance</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="paymentsTable"><tr><td colspan="9">Loading...</td></tr></tbody>
+                    </table>
                 </div>
-                <p>Admin panel configurations.</p>
             </div>
+
+            <!-- ==================== INQUIRIES PAGE ==================== -->
+            <div class="page" id="inquiries-page">
+                <div class="page-header"><h3>Client Inquiries</h3></div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Service</th><th>Message</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="inquiriesTable"><tr><td colspan="7">Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== TEAM PAGE ==================== -->
+            <div class="page" id="team-page">
+                <div class="page-header">
+                    <h3>Team Management</h3>
+                    <button class="btn btn-primary" onclick="window.showTeamForm()"><i class="fas fa-plus"></i> Add Team Member</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Photo</th><th>Name</th><th>Position</th><th>Phone</th><th>Email</th><th>Order</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="teamTable"><tr><td colspan="7">Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== SETTINGS PAGE ==================== -->
+            <div class="page" id="settings-page">
+                <div class="page-header"><h3>Website Settings</h3></div>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3>Company Information</h3>
+                        <form id="settingsForm">
+                            <div class="form-group"><label>Company Name</label><input type="text" id="setCompanyName" value="Landcity Properties Nigeria Limited"></div>
+                            <div class="form-group"><label>Phone 1</label><input type="text" id="setPhone1" value="+234 911 366 8055"></div>
+                            <div class="form-group"><label>Phone 2</label><input type="text" id="setPhone2" value="+234 906 705 7443"></div>
+                            <div class="form-group"><label>Email</label><input type="email" id="setEmail" value="info@lancitypropertiesnigltd.com"></div>
+                            <div class="form-group"><label>Website</label><input type="text" id="setWebsite" value="www.lancitypropertiesnigltd.com"></div>
+                            <div class="form-group"><label>Address</label><textarea id="setAddress" rows="2">Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, Opp. Audu Manager Filling Station, Kumbotso L.G, Kano State</textarea></div>
+                            <div class="form-group"><label>WhatsApp Number</label><input type="text" id="setWhatsapp" value="+234 803 230 6942"></div>
+                            <div class="form-group"><label>YouTube Channel</label><input type="text" id="setYoutube" value="@landcityproperties"></div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Settings</button>
+                        </form>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Database Info</h3>
+                        <p style="color:#64748b;font-size:14px;margin-bottom:15px;">Your Supabase database is connected. All data is synced in real-time.</p>
+                        <div class="quick-actions">
+                            <button class="btn btn-outline" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
+                            <button class="btn btn-outline" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh</button>
+                            <button class="btn btn-outline" onclick="window.open('https://supabase.com/dashboard/project/epjrvxbbppumrprofgbo', '_blank')"><i class="fas fa-database"></i> Open Supabase</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
+    <!-- ==================== PROPERTY FORM MODAL ==================== -->
+    <div class="modal" id="propertyModal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="propertyModalTitle">Add New Property</h3>
+                <button class="btn-close" onclick="window.closePropertyForm()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="propertyForm">
+                <input type="hidden" id="propertyId">
+                <div class="form-row">
+                    <div class="form-group"><label>Plot Number *</label><input type="text" id="propPlotNumber" required></div>
+                    <div class="form-group"><label>Property Type</label><select id="propType"><option value="plot">Plot</option><option value="house">House</option><option value="commercial">Commercial</option><option value="apartment">Apartment</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Layout Name</label><input type="text" id="propLayout" placeholder="e.g., Gwarzo Layout"></div>
+                    <div class="form-group"><label>Plot Size</label><input type="text" id="propSize" placeholder="e.g., 50x50"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Location</label><input type="text" id="propLocation" value="Kano State"></div>
+                    <div class="form-group"><label>Price (₦) *</label><input type="number" id="propPrice" required min="0" step="0.01"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Status</label><select id="propStatus"><option value="available">Available</option><option value="reserved">Reserved</option><option value="sold">Sold</option></select></div>
+                    <div class="form-group"><label>Buyer Name</label><input type="text" id="propBuyerName" placeholder="If sold"></div>
+                </div>
+                <div class="form-group"><label>Buyer Phone</label><input type="text" id="propBuyerPhone" placeholder="If sold"></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Property</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.closePropertyForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- ==================== TEAM FORM MODAL ==================== -->
+<div class="modal" id="teamModal" style="display:none">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="teamModalTitle">Add Team Member</h3>
+            <button class="btn-close" onclick="window.closeTeamForm()"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="teamForm" enctype="multipart/form-data">
+            <input type="hidden" id="teamMemberId">
+            <div class="form-row">
+                <div class="form-group"><label>Full Name *</label><input type="text" id="teamName" required></div>
+                <div class="form-group"><label>Position *</label><input type="text" id="teamPosition" required placeholder="e.g., Chairman/CEO"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Phone</label><input type="text" id="teamPhone" placeholder="+234..."></div>
+                <div class="form-group"><label>WhatsApp</label><input type="text" id="teamWhatsapp" placeholder="+234..."></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Email</label><input type="email" id="teamEmail" placeholder="email@example.com"></div>
+                <div class="form-group"><label>Display Order</label><input type="number" id="teamDisplayOrder" value="0" min="0"></div>
+            </div>
+            <div class="form-group"><label>Bio</label><textarea id="teamBio" rows="2" placeholder="Short biography..."></textarea></div>
+            <div class="form-group">
+                <label>Photo</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="teamPhoto" accept="image/*" style="display:none" onchange="previewTeamPhoto(this)">
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('teamPhoto').click()">
+                        <i class="fas fa-image"></i> Choose Photo
+                    </button>
+                    <span id="photoFileName" style="font-size:12px;color:#64748b;margin-left:10px;">No file chosen</span>
+                </div>
+                <div id="photoPreview" style="margin-top:10px;display:none;">
+                    <img id="photoPreviewImg" src="" alt="Preview" style="width:100px;height:100px;border-radius:10px;object-fit:cover;border:2px solid #b8860b;">
+                    <button type="button" class="btn-icon" onclick="removePhoto()" style="color:#dc2626;"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Team Member</button>
+                <button type="button" class="btn btn-secondary" onclick="window.closeTeamForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Config -->
+    <script src="js/supabase.js"></script>
+    <!-- Admin JS -->
     <script src="js/admin.js"></script>
 </body>
 </html>
