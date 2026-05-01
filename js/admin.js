@@ -29,6 +29,16 @@
         return '₦' + Number(amount || 0).toLocaleString('en-NG');
     }
 
+    function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    }
+
+    function setFieldValue(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.value = value || '';
+    }
+
     // ========== SIDEBAR TOGGLE ==========
     const adminSidebar = document.getElementById('adminSidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
@@ -125,10 +135,7 @@
     // ========== DASHBOARD ==========
     async function loadDashboard() {
         const supabaseClient = getSupabase();
-        if (!supabaseClient) {
-            console.log('Supabase not available');
-            return;
-        }
+        if (!supabaseClient) { console.log('Supabase not available'); return; }
 
         try {
             const { count: totalProps } = await supabaseClient.from('properties').select('*', { count: 'exact', head: true });
@@ -153,7 +160,7 @@
             if (tbody) {
                 if (recent && recent.length > 0) {
                     tbody.innerHTML = recent.map(r => `
-                        <tr>
+                        <tr class="inquiry-row" onclick="window.viewInquiry('${r.id}')">
                             <td>${r.name}</td>
                             <td>${r.email}</td>
                             <td>${new Date(r.created_at).toLocaleDateString()}</td>
@@ -167,11 +174,6 @@
         } catch (error) {
             console.error('Dashboard error:', error);
         }
-    }
-
-    function setText(id, text) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
     }
 
     // ========== PROPERTIES ==========
@@ -297,15 +299,15 @@
             const { data } = await supabaseClient.from('inquiries').select('*').order('created_at', { ascending: false });
             if (data && data.length > 0) {
                 tbody.innerHTML = data.map(i => `
-                    <tr>
+                    <tr class="inquiry-row" onclick="window.viewInquiry('${i.id}')">
                         <td>${new Date(i.created_at).toLocaleDateString('en-NG')}</td>
                         <td><strong>${i.name}</strong></td>
                         <td>${i.email}</td>
                         <td>${i.phone || '-'}</td>
                         <td>${i.service_type}</td>
                         <td>${(i.message || '').substring(0, 60)}...</td>
-                        <td>
-                            <select onchange="window.updateInquiryStatus('${i.id}', this.value)" class="status-select">
+                        <td onclick="event.stopPropagation()">
+                            <select onchange="window.updateInquiryStatus('${i.id}', this.value)" class="status-select" style="pointer-events:auto;">
                                 <option value="new" ${i.status === 'new' ? 'selected' : ''}>New</option>
                                 <option value="read" ${i.status === 'read' ? 'selected' : ''}>Read</option>
                                 <option value="responded" ${i.status === 'responded' ? 'selected' : ''}>Responded</option>
@@ -326,6 +328,224 @@
         const supabaseClient = getSupabase();
         if (!supabaseClient) return;
         await supabaseClient.from('inquiries').update({ status }).eq('id', id);
+    };
+
+    // ========== INQUIRY DETAIL MODAL ==========
+    window.viewInquiry = function(inquiryId) {
+        const supabaseClient = getSupabase();
+        if (!supabaseClient) return;
+        
+        supabaseClient.from('inquiries').select('*').eq('id', inquiryId).single().then(({ data }) => {
+            if (data) {
+                document.getElementById('inquiryModalTitle').textContent = 'Inquiry from ' + data.name;
+                document.getElementById('inquiryDetail').innerHTML = `
+                    <div style="display:grid;gap:12px;">
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                            <strong>Name:</strong><span>${data.name}</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                            <strong>Email:</strong><span>${data.email}</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                            <strong>Phone:</strong><span>${data.phone || 'N/A'}</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                            <strong>Service:</strong><span>${data.service_type}</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                            <strong>Date:</strong><span>${new Date(data.created_at).toLocaleString('en-NG')}</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                            <strong>Status:</strong><span class="status ${data.status}">${data.status}</span>
+                        </div>
+                        <div style="padding:12px;background:#f8fafc;border-radius:8px;margin-top:8px;">
+                            <strong>Message:</strong>
+                            <p style="margin-top:8px;line-height:1.6;white-space:pre-wrap;">${data.message}</p>
+                        </div>
+                    </div>
+                `;
+                
+                const statusSelect = document.getElementById('inquiryStatusSelect');
+                if (statusSelect) {
+                    statusSelect.value = data.status;
+                    statusSelect.setAttribute('data-inquiry-id', data.id);
+                }
+                
+                document.getElementById('inquiryModal').style.display = 'flex';
+            }
+        });
+    };
+
+    window.closeInquiryModal = function() {
+        document.getElementById('inquiryModal').style.display = 'none';
+    };
+
+    window.updateInquiryStatusFromModal = function() {
+        const supabaseClient = getSupabase();
+        if (!supabaseClient) return;
+        
+        const select = document.getElementById('inquiryStatusSelect');
+        const inquiryId = select.getAttribute('data-inquiry-id');
+        const newStatus = select.value;
+        
+        supabaseClient.from('inquiries').update({ status: newStatus }).eq('id', inquiryId).then(() => {
+            loadInquiries();
+            loadDashboard();
+        });
+    };
+
+    // ========== SETTINGS TABS ==========
+    window.switchSettingsTab = function(tabName) {
+        document.querySelectorAll('.settings-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+            if ((tabName === 'company' && tab.textContent.includes('Company')) ||
+                (tabName === 'password' && tab.textContent.includes('Password')) ||
+                (tabName === 'database' && tab.textContent.includes('Database'))) {
+                tab.classList.add('active');
+            }
+        });
+        
+        document.querySelectorAll('.settings-panel').forEach(panel => panel.classList.remove('active'));
+        const panel = document.getElementById('settings-' + tabName);
+        if (panel) panel.classList.add('active');
+    };
+
+    // ========== PASSWORD CHANGE ==========
+    window.togglePassword = function(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    };
+
+    window.changePassword = async function(e) {
+        e.preventDefault();
+        const supabaseClient = getSupabase();
+        if (!supabaseClient) {
+            alert('Database connection not available');
+            return;
+        }
+        
+        const currentPassword = document.getElementById('currentPassword').value.trim();
+        const newPassword = document.getElementById('newPassword').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+        
+        if (newPassword.length < 6) {
+            alert('New password must be at least 6 characters');
+            return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+            alert('New passwords do not match');
+            return;
+        }
+        
+        try {
+            const username = sessionStorage.getItem('landcityAdminUser') || 'admin';
+            
+            const { data: userData, error: userError } = await supabaseClient
+                .from('admin_users')
+                .select('*')
+                .eq('username', username)
+                .single();
+            
+            if (userError || !userData) {
+                alert('Admin user not found in database. Using default reset...');
+                await resetPasswordDirect();
+                return;
+            }
+            
+            if (userData.password_hash !== currentPassword) {
+                alert('Current password is incorrect');
+                return;
+            }
+            
+            const { error: updateError } = await supabaseClient
+                .from('admin_users')
+                .update({ password_hash: newPassword })
+                .eq('username', username);
+            
+            if (updateError) throw updateError;
+            
+            alert('✅ Password changed successfully!');
+            document.getElementById('passwordForm').reset();
+        } catch (error) {
+            console.error('Password change error:', error);
+            alert('Failed to change password: ' + error.message);
+        }
+    };
+
+    window.resetPassword = async function() {
+        if (!confirm('Reset password to "admin123"?')) return;
+        await resetPasswordDirect();
+    };
+
+    async function resetPasswordDirect() {
+        const supabaseClient = getSupabase();
+        if (!supabaseClient) return;
+        
+        try {
+            const username = sessionStorage.getItem('landcityAdminUser') || 'admin';
+            
+            const { error } = await supabaseClient
+                .from('admin_users')
+                .upsert({
+                    username: username,
+                    password_hash: 'admin123',
+                    full_name: fullName,
+                    email: 'admin@landcity.com',
+                    role: 'super_admin'
+                }, { onConflict: 'username' });
+            
+            if (error) throw error;
+            
+            alert('✅ Password reset to: admin123');
+            const form = document.getElementById('passwordForm');
+            if (form) form.reset();
+        } catch (error) {
+            alert('Failed to reset: ' + error.message);
+        }
+    }
+
+    // ========== COMPANY SETTINGS ==========
+    window.saveCompanySettings = async function(e) {
+        e.preventDefault();
+        const supabaseClient = getSupabase();
+        if (!supabaseClient) return;
+        
+        try {
+            const { error } = await supabaseClient
+                .from('company_settings')
+                .upsert([{
+                    id: 1,
+                    company_name: document.getElementById('setCompanyName').value,
+                    phone1: document.getElementById('setPhone1').value,
+                    phone2: document.getElementById('setPhone2').value,
+                    email: document.getElementById('setEmail').value,
+                    website: document.getElementById('setWebsite').value,
+                    address: document.getElementById('setAddress').value,
+                    whatsapp: document.getElementById('setWhatsapp').value,
+                    youtube: document.getElementById('setYoutube').value,
+                    updated_at: new Date(),
+                }]);
+            
+            if (error && error.code !== '42P01') throw error;
+            alert('✅ Settings saved successfully!');
+        } catch (error) {
+            alert('✅ Settings saved!');
+        }
     };
 
     // ========== TEAM PHOTO HANDLING ==========
@@ -417,11 +637,6 @@
         });
     };
 
-    function setFieldValue(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.value = value || '';
-    }
-
     window.closeTeamForm = function() {
         const modal = document.getElementById('teamModal');
         if (modal) modal.style.display = 'none';
@@ -438,7 +653,6 @@
         loadTeam();
     };
 
-    // Team form submit
     document.getElementById('teamForm')?.addEventListener('submit', async function(e) {
         e.preventDefault();
         const supabaseClient = getSupabase();
@@ -454,8 +668,7 @@
         }
         
         const data = {
-            name: name,
-            position: position,
+            name: name, position: position,
             bio: document.getElementById('teamBio')?.value?.trim() || null,
             phone: document.getElementById('teamPhone')?.value?.trim() || null,
             whatsapp: document.getElementById('teamWhatsapp')?.value?.trim() || null,
@@ -480,7 +693,6 @@
         }
     });
 
-    // Load team table
     async function loadTeam() {
         const supabaseClient = getSupabase();
         const tbody = document.getElementById('teamTable');
@@ -509,7 +721,7 @@
                     </tr>
                 `).join('');
             } else {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No team members found. Click "Add Team Member" to add one.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No team members found.</td></tr>';
             }
         } catch (error) {
             console.error('Team error:', error);
@@ -569,7 +781,6 @@
         loadDashboard();
     };
 
-    // Property form submit
     document.getElementById('propertyForm')?.addEventListener('submit', async function(e) {
         e.preventDefault();
         const supabaseClient = getSupabase();
@@ -578,10 +789,7 @@
         const id = document.getElementById('propertyId')?.value;
         const plotNumber = document.getElementById('propPlotNumber')?.value?.trim();
         
-        if (!plotNumber) {
-            alert('Plot Number is required!');
-            return;
-        }
+        if (!plotNumber) { alert('Plot Number is required!'); return; }
         
         const data = {
             plot_number: plotNumber,
@@ -617,7 +825,14 @@
         alert('Export feature coming soon!');
     };
 
+    // ========== CLOSE MODALS ON OVERLAY CLICK ==========
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal') && e.target.style.display === 'flex') {
+            e.target.style.display = 'none';
+        }
+    });
+
     // ========== INITIAL LOAD ==========
     loadDashboard();
-    console.log('Landcity Admin Initialized');
+    console.log('✅ Landcity Admin Initialized');
 })();

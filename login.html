@@ -11,32 +11,277 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0f3b3b 0%,#1a5c5c 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-        .login-container{background:white;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.3);width:100%;max-width:440px;overflow:hidden}
-        .login-header{background:#0f3b3b;padding:40px;text-align:center;color:white}
-        .login-logo{width:80px;height:80px;border-radius:50%;margin-bottom:16px;border:3px solid #b8860b;object-fit:cover}
-        .login-header h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:8px}
-        .login-header p{opacity:0.8;font-size:0.9rem}
+        body{
+            font-family:'Inter',sans-serif;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+            position:relative;
+            background: #0f3b3b;
+        }
+        
+        /* Banner Background */
+        .login-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('assets/banner.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.25);
+            z-index: 0;
+        }
+        
+        .login-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(15, 59, 59, 0.9) 0%, rgba(26, 92, 92, 0.85) 100%);
+        }
+        
+        .login-container{
+            background:white;
+            border-radius:24px;
+            box-shadow:0 20px 60px rgba(0,0,0,0.4);
+            width:100%;
+            max-width:440px;
+            overflow:hidden;
+            position:relative;
+            z-index:1;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-header{
+            background:linear-gradient(135deg,#0f3b3b 0%,#1a5c5c 100%);
+            padding:40px;
+            text-align:center;
+            color:white;
+            position:relative;
+            overflow:hidden;
+        }
+        
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(184,134,11,0.1) 0%, transparent 60%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .login-logo{
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            margin-bottom:16px;
+            border:3px solid #b8860b;
+            object-fit:cover;
+            position:relative;
+            z-index:1;
+            box-shadow:0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .login-header h2{
+            font-family:'Playfair Display',serif;
+            font-size:1.8rem;
+            margin-bottom:8px;
+            position:relative;
+            z-index:1;
+        }
+        
+        .login-header p{
+            opacity:0.8;
+            font-size:0.9rem;
+            position:relative;
+            z-index:1;
+        }
+        
         .login-form{padding:40px}
+        
         .form-group{margin-bottom:24px}
-        .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#1e293b;font-size:0.9rem}
+        
+        .form-group label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:600;
+            color:#1e293b;
+            font-size:0.9rem;
+        }
+        
         .input-wrapper{position:relative}
-        .input-wrapper i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#94a3b8}
-        .input-wrapper input{width:100%;padding:14px 16px 14px 44px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;transition:all 0.3s}
-        .input-wrapper input:focus{outline:none;border-color:#b8860b;box-shadow:0 0 0 3px rgba(184,134,11,0.1)}
-        .btn-login{width:100%;padding:14px;background:#b8860b;color:white;border:none;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.3s;margin-top:10px}
-        .btn-login:hover{background:#9e7609;transform:translateY(-2px);box-shadow:0 8px 25px rgba(184,134,11,0.3)}
-        .btn-login:disabled{opacity:0.6;cursor:not-allowed}
-        .back-to-site{text-align:center;margin-top:20px}
-        .back-to-site a{color:#64748b;text-decoration:none;font-size:0.9rem;transition:color 0.3s}
+        
+        .input-wrapper .input-icon{
+            position:absolute;
+            left:16px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#94a3b8;
+            font-size:16px;
+            z-index:1;
+        }
+        
+        .input-wrapper input{
+            width:100%;
+            padding:14px 45px 14px 44px;
+            border:2px solid #e2e8f0;
+            border-radius:12px;
+            font-size:1rem;
+            font-family:'Inter',sans-serif;
+            transition:all 0.3s;
+        }
+        
+        .input-wrapper input:focus{
+            outline:none;
+            border-color:#b8860b;
+            box-shadow:0 0 0 3px rgba(184,134,11,0.1);
+        }
+        
+        .password-toggle{
+            position:absolute;
+            right:12px;
+            top:50%;
+            transform:translateY(-50%);
+            background:none;
+            border:none;
+            color:#94a3b8;
+            cursor:pointer;
+            padding:8px;
+            font-size:16px;
+            transition:color 0.2s;
+            z-index:1;
+        }
+        
+        .password-toggle:hover{
+            color:#b8860b;
+        }
+        
+        .btn-login{
+            width:100%;
+            padding:14px;
+            background:linear-gradient(135deg,#b8860b 0%,#9e7609 100%);
+            color:white;
+            border:none;
+            border-radius:12px;
+            font-size:1rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:all 0.3s;
+            margin-top:10px;
+            font-family:'Inter',sans-serif;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+        }
+        
+        .btn-login:hover:not(:disabled){
+            transform:translateY(-2px);
+            box-shadow:0 8px 25px rgba(184,134,11,0.4);
+        }
+        
+        .btn-login:disabled{
+            opacity:0.6;
+            cursor:not-allowed;
+        }
+        
+        .back-to-site{
+            text-align:center;
+            padding:0 40px 30px;
+        }
+        
+        .back-to-site a{
+            color:#64748b;
+            text-decoration:none;
+            font-size:0.9rem;
+            transition:color 0.3s;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+        }
+        
         .back-to-site a:hover{color:#b8860b}
-        .error-message{background:#fef2f2;color:#dc2626;padding:12px;border-radius:8px;margin-bottom:20px;font-size:0.9rem;display:none;align-items:center;gap:8px}
+        
+        .error-message{
+            background:#fef2f2;
+            color:#dc2626;
+            padding:12px 15px;
+            border-radius:10px;
+            margin-bottom:20px;
+            font-size:0.9rem;
+            display:none;
+            align-items:center;
+            gap:8px;
+            border:1px solid #fecaca;
+            animation:shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%,100%{transform:translateX(0)}
+            25%{transform:translateX(-5px)}
+            75%{transform:translateX(5px)}
+        }
+        
         .error-message.show{display:flex}
-        .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid white;border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block}
+        
+        .spinner{
+            width:18px;
+            height:18px;
+            border:2px solid rgba(255,255,255,0.3);
+            border-top:2px solid white;
+            border-radius:50%;
+            animation:spin 0.8s linear infinite;
+            display:inline-block;
+        }
+        
         @keyframes spin{to{transform:rotate(360deg)}}
+        
+        .login-footer{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-top:20px;
+            padding-top:20px;
+            border-top:1px solid #e2e8f0;
+        }
+        
+        .default-creds{
+            color:#94a3b8;
+            font-size:0.75rem;
+            font-style:italic;
+        }
+        
+        @media (max-width:480px){
+            .login-header{padding:30px 25px 25px}
+            .login-header h2{font-size:1.5rem}
+            .login-form{padding:25px}
+            .login-logo{width:70px;height:70px}
+        }
     </style>
 </head>
 <body>
+    <!-- Banner Background -->
+    <div class="login-bg"></div>
+    
     <div class="login-container">
         <div class="login-header">
             <img src="assets/logo.jpeg" alt="Landcity Logo" class="login-logo">
@@ -45,73 +290,157 @@
         </div>
         <form class="login-form" id="loginForm">
             <div class="error-message" id="errorMessage"><i class="fas fa-exclamation-circle"></i><span id="errorText"></span></div>
+            
             <div class="form-group">
                 <label for="username">Username</label>
-                <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="username" placeholder="Enter your username" required autofocus></div>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" placeholder="Enter your username" required autofocus>
+                </div>
             </div>
+            
             <div class="form-group">
                 <label for="password">Password</label>
-                <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="password" placeholder="Enter your password" required></div>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility()" title="Show/Hide Password">
+                        <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                    </button>
+                </div>
             </div>
+            
             <button type="submit" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+            
+       
         </form>
         <div class="back-to-site"><a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a></div>
     </div>
 
+    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
+    
     <script>
+        // ============================================
+        // SUPABASE CONFIGURATION
+        // ============================================
+        const SUPABASE_URL = 'https://epjrvxbbppumrprofgbo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwanJ2eGJicHB1bXJwcm9mZ2JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0Nzc4NzQsImV4cCI6MjA5MzA1Mzg3NH0.ZZXjP-aBI4cdgR0IHJOVPvQdkI42GNveNurxI40K4tE';
+        
+        let supabaseClient = null;
+        
+        // Initialize Supabase
+        if (typeof supabase !== 'undefined' && supabase.createClient) {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('✅ Supabase connected');
+        } else {
+            console.warn('⚠️ Supabase CDN not loaded');
+        }
+
+        // ============================================
+        // PASSWORD TOGGLE
+        // ============================================
+        window.togglePasswordVisibility = function() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        };
+
+        // ============================================
+        // LOGIN FORM HANDLER
+        // ============================================
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             const errorMessage = document.getElementById('errorMessage');
             const errorText = document.getElementById('errorText');
             const loginBtn = document.getElementById('loginBtn');
             
+            // Hide previous errors
+            errorMessage.classList.remove('show');
+            
             if (!username || !password) {
-                showError('Please enter username and password');
+                showError('Please enter both username and password');
                 return;
             }
             
+            // Show loading state
             loginBtn.innerHTML = '<span class="spinner"></span> Signing in...';
             loginBtn.disabled = true;
             
             try {
                 let authenticated = false;
                 let fullName = 'Admin User';
+                let userRole = 'admin';
                 
-                if (supabase) {
+                // ========== TRY SUPABASE AUTHENTICATION ==========
+                if (supabaseClient) {
                     try {
-                        const { data: users } = await supabase
+                        const { data: users, error: dbError } = await supabaseClient
                             .from('admin_users')
                             .select('*')
                             .eq('username', username)
                             .single();
                         
-                        if (users && password === 'admin123') {
-                            authenticated = true;
-                            fullName = users.full_name || username;
+                        if (dbError) {
+                            console.log('Database query error:', dbError.message);
+                            if (dbError.code === '42P01') {
+                                console.warn('admin_users table not found in database');
+                            }
+                        }
+                        
+                        if (users) {
+                            console.log('User found:', users.username);
+                            
+                            // Compare password
+                            if (users.password_hash === password) {
+                                authenticated = true;
+                                fullName = users.full_name || username;
+                                userRole = users.role || 'admin';
+                                console.log('✅ Password matched!');
+                            } else {
+                                console.log('❌ Password mismatch');
+                            }
+                        } else {
+                            console.log('❌ No user found with username:', username);
                         }
                     } catch (dbError) {
-                        console.log('DB auth skipped:', dbError.message);
+                        console.error('Database error:', dbError);
                     }
                 }
                 
-                // Fallback authentication
-                if (!authenticated && username === 'admin' && password === 'landcity2026') {
+                // ========== FALLBACK AUTHENTICATION ==========
+                if (!authenticated && !supabaseClient && username === 'admin' && password === 'admin123') {
                     authenticated = true;
+                    console.log('✅ Fallback auth used');
                 }
                 
+                // ========== HANDLE RESULT ==========
                 if (authenticated) {
                     sessionStorage.setItem('landcityAdminLoggedIn', 'true');
                     sessionStorage.setItem('landcityAdminUser', username);
                     sessionStorage.setItem('landcityAdminFullName', fullName);
+                    sessionStorage.setItem('landcityAdminRole', userRole);
+                    
+                    console.log('✅ Login successful! Redirecting...');
                     window.location.href = 'admin.html';
                 } else {
-                    showError('Invalid username or password');
+                    showError('Invalid username or password. Please try again.');
                 }
+                
             } catch (error) {
+                console.error('Login error:', error);
                 showError('An error occurred. Please try again.');
             } finally {
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
@@ -119,17 +448,26 @@
             }
         });
         
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
         function showError(msg) {
             const errorMessage = document.getElementById('errorMessage');
             const errorText = document.getElementById('errorText');
             errorText.textContent = msg;
             errorMessage.classList.add('show');
-            setTimeout(() => errorMessage.classList.remove('show'), 4000);
+            setTimeout(() => { errorMessage.classList.remove('show'); }, 5000);
         }
         
+        // ============================================
+        // CHECK IF ALREADY LOGGED IN
+        // ============================================
         if (sessionStorage.getItem('landcityAdminLoggedIn') === 'true') {
+            console.log('Already logged in, redirecting...');
             window.location.href = 'admin.html';
         }
+        
+        console.log('Login page ready. Supabase connected:', !!supabaseClient);
     </script>
 </body>
 </html>
