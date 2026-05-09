@@ -2,338 +2,740 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Landcity Properties Nigeria Limited - Premium real estate services in Kano State. Plots, homes, and property management.">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <title>Landcity Properties Nigeria | Real Estate & Property Management</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Landcity Properties | Premium Plots & Real Estate Kano</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f3b3b;
+            --gold: #b8860b;
+            --gold-light: #d4a843;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            --radius: 1.25rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Advert Overlay (flyer) */
+        .ad-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.4s ease;
+        }
+        .ad-card {
+            max-width: 520px;
+            width: 90%;
+            background: #fff;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.4);
+            animation: fadeUp 0.4s ease;
+            cursor: default;
+            position: relative;
+        }
+        .ad-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .ad-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            width: 36px;
+            height: 36px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: 0.2s;
+        }
+        .ad-close:hover {
+            background: var(--gold);
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: scale(0.95) translateY(20px);}
+            to { opacity: 1; transform: scale(1) translateY(0);}
+        }
+
+        /* Header & Nav */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 0.8rem 0;
+        }
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+        }
+        .logo span span {
+            color: var(--gold);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--dark);
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold);
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--gold);
+            color: white;
+            box-shadow: 0 8px 18px rgba(184,134,11,0.25);
+        }
+        .btn-primary:hover {
+            background: #9e7609;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            border: 2px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+        }
+        .btn-outline:hover {
+            background: var(--gold);
+            color: white;
+        }
+
+        /* Hero with slides */
+        .hero-slider {
+            position: relative;
+            height: 88vh;
+            min-height: 550px;
+            background: var(--primary);
+            overflow: hidden;
+        }
+        .slides-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            display: flex;
+            align-items: center;
+        }
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15,59,59,0.85) 0%, rgba(0,0,0,0.6) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            max-width: 650px;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+        }
+        .hero-content h1 span {
+            color: var(--gold);
+        }
+        .hero-address {
+            display: flex;
+            gap: 8px;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.9rem;
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 3;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .dot.active, .dot:hover {
+            background: var(--gold);
+            width: 28px;
+        }
+
+        /* Offer Banner (Installment plan) */
+        .offer-banner {
+            background: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .offer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .offer-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.2rem 2rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(4px);
+        }
+        .offer-card h3 {
+            font-size: 1.9rem;
+            color: var(--gold);
+        }
+        .offer-card p {
+            font-size: 0.9rem;
+        }
+        .layout-plan-section {
+            padding: 4rem 0;
+            background: var(--light);
+            text-align: center;
+        }
+        .plan-img {
+            max-width: 100%;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Services / Gallery etc */
+        .section {
+            padding: 5rem 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title h2 {
+            font-size: 2.4rem;
+            color: var(--primary);
+        }
+        .section-title span {
+            background: rgba(184,134,11,0.1);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+        .gallery-item {
+            border-radius: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+            transition: 0.3s;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        /* Contact form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+        }
+        .info-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 2rem;
+            margin-bottom: 1rem;
+            font-family: inherit;
+        }
+        footer {
+            background: var(--primary);
+            color: #ccc;
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+        }
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #25D366;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 99;
+            transition: 0.2s;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+                transition: 0.3s;
+                box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            }
+            .nav-links.open {
+                left: 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .offer-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--gold);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 99;
+        }
+        .back-to-top.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <div class="loader-logo">
-                <img src="assets/logo.jpeg" alt="Landcity Properties Logo">
-            </div>
-            <h2>Landcity<span>Properties</span></h2>
-        </div>
+
+<!-- FLYER ADVERT ON PAGE LOAD -->
+<div id="advertOverlay" class="ad-overlay">
+    <div class="ad-card">
+        <button class="ad-close" id="closeAdBtn">✕</button>
+        <img src="assets/flyer.jpeg" alt="Special Offer - Landcity Properties" onerror="this.src='https://placehold.co/600x400?text=flyer.jpeg+not+found'">
     </div>
+</div>
 
-    <!-- Header -->
-    <header class="header" id="header">
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-wrapper">
-                    <a href="#home" class="logo">
-                        <img src="assets/logo.jpeg" alt="Landcity Logo" class="logo-img">
-                        <span class="logo-text">Landcity<span>.</span>Properties</span>
-                    </a>
-                    <ul class="nav-menu" id="nav-menu">
-                        <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
-                        <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
-                        <li class="nav-item"><a href="#gallery" class="nav-link">Gallery</a></li>
-                        <li class="nav-item"><a href="#partners" class="nav-link">Partners</a></li>
-                        <li class="nav-item"><a href="#team" class="nav-link">Team</a></li>
-                        <li class="nav-item"><a href="#mission" class="nav-link">Mission & Vision</a></li>
-                        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                    </ul>
-                    <div class="hamburger" id="hamburger">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero" style="background-image: linear-gradient(rgba(15, 59, 59, 0.85), rgba(15, 59, 59, 0.9)), url('assets/banner.jpeg');">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <span class="hero-badge"><i class="fas fa-star"></i> Trusted Real Estate Partner</span>
-                        <h1>Premium Properties in <span>Kano State</span></h1>
-                        <p>Discover exceptional plots, luxury homes, and professional real estate services at Rahama Shopping Complex, Mariri, Maiduguri Road.</p>
-                        <div class="hero-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, Opp. Audu Manager Filling Station, Kumbotso L.G Kano State</span>
-                        </div>
-                        <div class="hero-buttons">
-                            <a href="#contact" class="btn btn-primary"><i class="fas fa-phone"></i> Get In Touch</a>
-                            <a href="#services" class="btn btn-outline"><i class="fas fa-arrow-right"></i> Our Services</a>
-                        </div>
-                        <div class="hero-stats">
-                            <div class="stat-item"><h3 id="statProperties">500+</h3><p>Properties Sold</p></div>
-                            <div class="stat-item"><h3 id="statClients">50+</h3><p>Happy Clients</p></div>
-                            <div class="stat-item"><h3>10+</h3><p>Years Experience</p></div>
-                        </div>
-                    </div>
-                    <div class="hero-image">
-                        <div class="hero-image-wrapper">
-                            <img src="assets/banner.jpeg" alt="Landcity Properties Building" class="hero-img">
-                        </div>
-                        <div class="hero-floating-card">
-                            <img src="assets/logo.jpeg" alt="Logo" class="floating-logo">
-                            <div><strong>Shop 76&75</strong><span>Rahama Shopping Complex</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about section-padding">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">Who We Are</span>
-                    <h2>About Landcity Properties</h2>
-                    <div class="section-divider"></div>
-                </div>
-                <div class="about-content">
-                    <div class="about-image"><img src="assets/banner.jpeg" alt="About Landcity Properties"></div>
-                    <div class="about-text">
-                        <h3>Your Trusted Real Estate Partner in Kano</h3>
-                        <p>Landcity Properties Nigeria Limited is a premier real estate company based in Kumbotso Local Government, Kano State. We specialize in providing top-notch property management and real estate services to our esteemed clients.</p>
-                        <p>Located strategically at Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, opposite Audu Manager Filling Station, we are easily accessible to serve you better.</p>
-                        <div class="about-features">
-                            <div class="feature-item"><i class="fas fa-check-circle"></i><span>Registered under Nigeria Limited</span></div>
-                            <div class="feature-item"><i class="fas fa-check-circle"></i><span>Strategic location at Rahama Complex</span></div>
-                            <div class="feature-item"><i class="fas fa-check-circle"></i><span>Professional property management</span></div>
-                            <div class="feature-item"><i class="fas fa-check-circle"></i><span>Verified plots and homes</span></div>
-                        </div>
-                        <div class="about-contact">
-                            <div class="contact-quick">
-                                <i class="fas fa-phone"></i>
-                                <div><strong>Call Us</strong><span>+234 911 366 8055</span><span>+234 906 705 7443</span></div>
-                            </div>
-                            <a href="#contact" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="services section-padding bg-light">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">What We Offer</span>
-                    <h2>Our Services</h2>
-                    <div class="section-divider"></div>
-                </div>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fas fa-map-marked-alt"></i></div>
-                        <h3>Plot Sales</h3>
-                        <p>Premium residential and commercial plots in prime locations across Kano State with proper documentation and verification.</p>
-                        <a href="#contact" class="service-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fas fa-home"></i></div>
-                        <h3>Home Sales</h3>
-                        <p>Modern, ready-to-move-in homes designed for families seeking comfort, security, and quality living spaces.</p>
-                        <a href="#contact" class="service-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fas fa-building"></i></div>
-                        <h3>Property Management</h3>
-                        <p>Comprehensive property management including tenant screening, maintenance, and rent collection services.</p>
-                        <a href="#contact" class="service-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fas fa-handshake"></i></div>
-                        <h3>Real Estate Agency</h3>
-                        <p>Professional agency services connecting buyers and sellers with the best property deals in the market.</p>
-                        <a href="#contact" class="service-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fas fa-search-location"></i></div>
-                        <h3>Property Valuation</h3>
-                        <p>Accurate property valuation services to help you make informed investment decisions.</p>
-                        <a href="#contact" class="service-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fas fa-file-contract"></i></div>
-                        <h3>Legal Documentation</h3>
-                        <p>Complete legal support for property transactions ensuring smooth and secure processes.</p>
-                        <a href="#contact" class="service-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gallery Section -->
-        <section id="gallery" class="gallery section-padding">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-subtitle">Our Portfolio</span>
-                    <h2>Property Gallery</h2>
-                    <div class="section-divider"></div>
-                </div>
-                <div class="gallery-grid" id="dynamicGallery">
-                    <div class="gallery-item"><img src="assets/real-estate.webp" alt="Property"><div class="gallery-overlay"><h4>Residential Plot</h4><p>Maiduguri Road, Kano</p></div></div>
-                    <div class="gallery-item"><img src="assets/images (16).jpeg" alt="Property"><div class="gallery-overlay"><h4>Modern Home</h4><p>Rahama Complex Area</p></div></div>
-                    <div class="gallery-item"><img src="assets/images (17).jpeg" alt="Property"><div class="gallery-overlay"><h4>Commercial Space</h4><p>Kumbotso L.G, Kano</p></div></div>
-                    <div class="gallery-item"><img src="assets/images (18).jpeg" alt="Property"><div class="gallery-overlay"><h4>Luxury Villa</h4><p>Opp. Audu Manager Filling Station</p></div></div>
-                    <div class="gallery-item"><img src="assets/Real-Estate.jpg" alt="Property"><div class="gallery-overlay"><h4>Shop Complex</h4><p>Mariri Area, Kano</p></div></div>
-                    <div class="gallery-item"><img src="assets/M8goDcwvY0rPUAS8.jpg" alt="Property"><div class="gallery-overlay"><h4>Estate Land</h4><p>Kano State</p></div></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Partners Section -->
-        <section id="partners" class="partners section-padding bg-light">
-            <div class="container">
-                <div class="section-header"><span class="section-subtitle">Trusted By</span><h2>Our Partners</h2><div class="section-divider"></div></div>
-                <div class="partners-grid">
-                    <div class="partner-item"><img src="assets/logo.jpeg" alt="Partner" class="partner-logo"><span>UrbanShelter Ltd</span></div>
-                    <div class="partner-item"><img src="assets/logo.jpeg" alt="Partner" class="partner-logo"><span>GreenAcres Dev</span></div>
-                    <div class="partner-item"><img src="assets/logo.jpeg" alt="Partner" class="partner-logo"><span>BuildRight Const</span></div>
-                    <div class="partner-item"><img src="assets/logo.jpeg" alt="Partner" class="partner-logo"><span>PrimeEstates NG</span></div>
-                    <div class="partner-item"><img src="assets/logo.jpeg" alt="Partner" class="partner-logo"><span>SafeHaven Prop</span></div>
-                </div>
-            </div>
-        </section>
-<!-- Team Section -->
-<section id="team" class="team section-padding">
+<header class="header">
     <div class="container">
-        <div class="section-header">
-            <span class="section-subtitle">Our People</span>
-            <h2>Meet Our Team</h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="team-grid" id="dynamicTeam">
-            <!-- Team members will be loaded dynamically from database -->
-            <!-- Fallback static content will show if database is empty -->
-            <div class="team-card">
-                <div class="team-avatar"><img src="assets/logo.jpeg" alt="Team"></div>
-                <h3>Loading...</h3>
-                <span class="team-role">Team Member</span>
-                <p>Loading team information...</p>
+        <div class="nav-wrapper">
+            <div class="logo">
+                <img src="assets/logo.jpeg" alt="logo" onerror="this.src='https://placehold.co/50x50?text=Logo'">
+                <span>Landcity<span>.</span>Properties</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#layout">Layout Plan</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
             </div>
         </div>
     </div>
-</section>
+</header>
 
-        <!-- Mission & Vision Section -->
-        <section id="mission" class="mission section-padding bg-light">
-            <div class="container">
-                <div class="section-header"><span class="section-subtitle">Our Purpose</span><h2>Mission, Vision & Motto</h2><div class="section-divider"></div></div>
-                <div class="mission-grid">
-                    <div class="mission-card">
-                        <div class="mission-icon"><img src="assets/logo.jpeg" alt="Mission" class="mission-logo"></div>
-                        <h3>Our Mission</h3>
-                        <blockquote>"To deliver trustworthy and innovative real estate solutions that create lasting value for our clients and communities across Nigeria."</blockquote>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon"><img src="assets/logo.jpeg" alt="Vision" class="mission-logo"></div>
-                        <h3>Our Vision</h3>
-                        <blockquote>"To become the foremost real estate brand in Northern Nigeria, recognized for integrity, excellence, and customer satisfaction."</blockquote>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon"><img src="assets/logo.jpeg" alt="Motto" class="mission-logo"></div>
-                        <h3>Our Motto</h3>
-                        <blockquote>"Building Trust, One Property at a Time."</blockquote>
-                    </div>
-                </div>
+<main>
+    <!-- HERO SLIDER SECTION -->
+    <section id="home" class="hero-slider">
+        <div class="slides-container" id="slidesContainer">
+            <!-- dynamic slides will be inserted but set background images from assets -->
+        </div>
+        <div class="slider-dots" id="sliderDots"></div>
+        <div class="container" style="position: absolute; bottom: 20%; left: 0; right: 0; z-index: 3;">
+            <div class="hero-content">
+                <h1>Premium Properties in <span>Kano State</span></h1>
+                <p>Own your dream plot with flexible plans. 50x50 residential plots with full C of O processing.</p>
+                <div class="hero-address"><i class="fas fa-map-marker-alt"></i> Shop 76&75 Rahama Complex, Mariri, Kumbotso L.G</div>
+                <a href="#contact" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Schedule Site Visit</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact section-padding">
-            <div class="container">
-                <div class="section-header"><span class="section-subtitle">Get In Touch</span><h2>Contact Us</h2><div class="section-divider"></div></div>
-                <div class="contact-wrapper">
-                    <div class="contact-info">
-                        <div class="contact-card"><i class="fas fa-map-marker-alt"></i><div><h4>Our Office</h4><p>Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, Opp. Audu Manager Filling Station, Kumbotso L.G, Kano State</p></div></div>
-                        <div class="contact-card"><i class="fas fa-phone"></i><div><h4>Call Us</h4><p>+234 911 366 8055</p><p>+234 906 705 7443</p></div></div>
-                        <div class="contact-card"><i class="fas fa-envelope"></i><div><h4>Email Us</h4><p>info@lancitypropertiesnigltd.com</p></div></div>
-                        <div class="contact-card"><i class="fas fa-globe"></i><div><h4>Website</h4><p>www.lancitypropertiesnigltd.com</p></div></div>
-                    </div>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group"><input type="text" name="name" placeholder="Your Full Name" required></div>
-                        <div class="form-group"><input type="email" name="email" placeholder="Your Email Address" required></div>
-                        <div class="form-group"><input type="tel" name="phone" placeholder="Your Phone Number"></div>
-                        <div class="form-group">
-                            <select name="service_type" required>
-                                <option value="">Select Service Interest</option>
-                                <option value="plot">Plot Purchase</option>
-                                <option value="home">Home Purchase</option>
-                                <option value="management">Property Management</option>
-                                <option value="other">Other Services</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><textarea name="message" rows="5" placeholder="Your Message" required></textarea></div>
-                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-paper-plane"></i> Send Message</button>
-                        <div id="formMessage" style="display:none; margin-top:15px; padding:12px; border-radius:8px; text-align:center;"></div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Installment Plan Offer -->
+    <div class="offer-banner">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <a href="#home" class="footer-logo"><img src="assets/logo.jpeg" alt="Logo" class="footer-logo-img"><span>Landcity<span>.</span>Properties</span></a>
-                    <p>Your trusted partner in real estate and property management in Kano State, Nigeria.</p>
-                    <p class="footer-contact"><i class="fas fa-phone"></i> +234 911 366 8055, +234 906 705 7443<br><i class="fas fa-globe"></i> www.lancitypropertiesnigltd.com</p>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul><li><a href="#about">About Us</a></li><li><a href="#services">Services</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <ul><li><a href="#">Plot Sales</a></li><li><a href="#">Home Sales</a></li><li><a href="#">Property Management</a></li><li><a href="#">Legal Documentation</a></li></ul>
-                </div>
-                <div class="footer-newsletter">
-                    <h4>Newsletter</h4>
-                    <p>Subscribe for property updates</p>
-                    <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" name="email" placeholder="Your email" required>
-                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                    </form>
-                    <div id="newsletterMessage" style="margin-top:10px; font-size:12px;"></div>
-                </div>
+            <h3>🔥 Easy Ownership Plans</h3>
+            <div class="offer-grid">
+                <div class="offer-card"><h3>₦5,000,000</h3><p>Outright Payment (Cash)</p></div>
+                <div class="offer-card"><h3>₦5,500,000</h3><p>Installment Plan · 18 months</p><small>Low monthly payment</small></div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2026 Landcity Properties Nigeria Limited. All rights reserved.</p></div>
+            <p style="margin-top: 1rem;">✓ 50x50 Plot | ✓ Clear Documentation | ✓ Perfect for Residential Builds</p>
         </div>
-    </footer>
-
-    <!-- Back to Top -->
-    <a href="#home" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
-
-    <!-- Floating Social -->
-    <div class="floating-social">
-        <a href="https://wa.me/+2348032306942?text=Hello%20Landcity%20Properties,%20I%20am%20interested%20in%20your%20real%20estate%20services" class="floating-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-            <i class="fab fa-whatsapp"></i><span class="tooltip">Chat with us!</span>
-        </a>
-        <a href="https://youtube.com/@landcityproperties" class="floating-youtube" target="_blank" rel="noopener noreferrer" aria-label="Visit our YouTube channel">
-            <i class="fab fa-youtube"></i><span class="tooltip">Subscribe to our channel</span>
-        </a>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
-    <script src="js/script.js"></script>
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-title"><span>Who we are</span><h2>About Landcity Properties</h2></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 2rem;">
+                <div><img src="assets/banner.jpeg" alt="Office" style="border-radius: 1.5rem; width:100%;" onerror="this.src='https://placehold.co/400x300?text=Office'"></div>
+                <div><p>Landcity Properties Nigeria Limited is a trusted real estate firm located in Kumbotso L.G, Kano State. We specialize in selling verified plots, modern homes, and offer property management services. Our office at Rahama Shopping Complex provides easy access for clients across the metropolis.</p>
+                <div style="margin: 1rem 0;"><i class="fas fa-check-circle" style="color:var(--gold)"></i> 500+ Properties Sold &nbsp;&nbsp;<i class="fas fa-check-circle" style="color:var(--gold)"></i> 100% Legal Documentation</div>
+                <a href="#contact" class="btn btn-primary">Inquire Today</a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section" style="background: var(--light);">
+        <div class="container">
+            <div class="section-title"><span>What we offer</span><h2>Our Services</h2></div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="assets/real-estate.webp" alt="Plots" onerror="this.src='https://placehold.co/400x240'"><div style="padding:1rem"><h3>Plot Sales</h3><p>Prime locations in Kano with full verification.</p></div></div>
+                <div class="gallery-item"><img src="assets/images (16).jpeg" alt="Homes"><div style="padding:1rem"><h3>Home Sales</h3><p>Ready-to-move luxury homes & villas.</p></div></div>
+                <div class="gallery-item"><img src="assets/images (17).jpeg" alt="Management"><div style="padding:1rem"><h3>Property Mgmt</h3><p>Maintenance, tenant management & more.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LAYOUT PLAN IMAGE (estate plan) -->
+    <section id="layout" class="layout-plan-section">
+        <div class="container">
+            <div class="section-title"><span>Estate Layout</span><h2>Our Estate Master Plan</h2></div>
+            <p>Approved layout plan — 50x50 residential plots with access roads and green areas.</p>
+            <img src="assets/layout plan.jpeg" alt="Estate Layout Plan" class="plan-img" id="layoutPlanImg" onerror="this.src='https://placehold.co/800x500?text=Layout+Plan+Image'">
+        </div>
+    </section>
+
+    <!-- Gallery with additional images -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <div class="section-title"><span>Portfolio</span><h2>Property Gallery</h2></div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="assets/images (18).jpeg" alt="Property"></div>
+                <div class="gallery-item"><img src="assets/Real-Estate.jpg" alt="Real Estate"></div>
+                <div class="gallery-item"><img src="assets/M8goDcwvY0rPUAS8.jpg" alt="Estate"></div>
+                <div class="gallery-item"><img src="assets/flyer.jpeg" alt="Promo Flyer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact + Map etc -->
+    <section id="contact" class="section" style="background: var(--light);">
+        <div class="container">
+            <div class="section-title"><span>Get in touch</span><h2>Contact Us</h2></div>
+            <div class="contact-grid">
+                <div>
+                    <div class="info-card"><i class="fas fa-map-marker-alt" style="color: var(--gold); font-size:1.5rem;"></i> <strong>Address</strong><br>Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, Opp. Audu Manager Filling Station, Kumbotso L.G, Kano State.</div>
+                    <div class="info-card"><i class="fas fa-phone"></i> <strong>Phone</strong><br>+234 911 366 8055  |  +234 906 705 7443</div>
+                    <div class="info-card"><i class="fas fa-envelope"></i> <strong>Email</strong><br>info@lancitypropertiesnigltd.com</div>
+                </div>
+                <form id="contactForm">
+                    <input type="text" placeholder="Full Name" required id="name">
+                    <input type="email" placeholder="Email" required id="email">
+                    <input type="tel" placeholder="Phone" id="phone">
+                    <select id="interest">
+                        <option>Plot Purchase</option><option>Home Purchase</option><option>Installment Plan</option>
+                    </select>
+                    <textarea rows="3" placeholder="Your message..." id="message"></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+                    <div id="formFeedback" style="margin-top: 1rem; font-size:0.9rem;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div><img src="assets/logo.jpeg" width="50" style="border-radius: 50%;"><p>Landcity Properties Nigeria Ltd<br>RC: 1234567</p></div>
+            <div><h4>Quick Links</h4><a href="#home" style="color:#ccc; display:block;">Home</a><a href="#about" style="color:#ccc;">About</a><a href="#layout" style="color:#ccc;">Layout Plan</a></div>
+            <div><h4>Legal</h4><p>Clear land title | Verified C of O | Flexible payment</p></div>
+        </div>
+        <hr style="margin: 2rem 0 1rem; border-color:#2d5a5a;">
+        <p style="text-align: center;">&copy; 2026 Landcity Properties. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- WhatsApp Floating -->
+<a href="https://wa.me/+2349113668055?text=Hello%20Landcity%20Properties,%20I%20am%20interested%20in%20your%20plot%20offer" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // ---------- FLYER ADVERT CLOSE ----------
+    const advert = document.getElementById('advertOverlay');
+    const closeAd = document.getElementById('closeAdBtn');
+    if (closeAd) {
+        closeAd.addEventListener('click', () => {
+            advert.style.opacity = '0';
+            setTimeout(() => { advert.style.display = 'none'; }, 500);
+        });
+        // click on overlay also close
+        advert.addEventListener('click', (e) => {
+            if(e.target === advert) {
+                advert.style.opacity = '0';
+                setTimeout(() => { advert.style.display = 'none'; }, 500);
+            }
+        });
+    }
+
+    // ---------- HERO SLIDES (using assets images as background) ----------
+    const slidesData = [
+        { bg: "assets/banner.jpeg", title: "Secure Your Future", desc: "Premium 50x50 plots" },
+        { bg: "assets/images (16).jpeg", title: "Modern Homes", desc: "Ready to move" },
+        { bg: "assets/real-estate.webp", title: "Prime Investment", desc: "High ROI locations" }
+    ];
+    let currentSlide = 0;
+    const slidesContainer = document.getElementById('slidesContainer');
+    const dotsContainer = document.getElementById('sliderDots');
+    let slideInterval;
+
+    function buildSlides() {
+        slidesContainer.innerHTML = '';
+        dotsContainer.innerHTML = '';
+        slidesData.forEach((slide, idx) => {
+            const slideDiv = document.createElement('div');
+            slideDiv.className = `slide ${idx === 0 ? 'active' : ''}`;
+            slideDiv.style.backgroundImage = `linear-gradient(135deg, rgba(15,59,59,0.8), rgba(0,0,0,0.5)), url('${slide.bg}')`;
+            slideDiv.style.backgroundSize = 'cover';
+            slideDiv.style.backgroundPosition = 'center';
+            slidesContainer.appendChild(slideDiv);
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(idx === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(idx));
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    function goToSlide(index) {
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        if(!slides.length) return;
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = (index + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+        resetInterval();
+    }
+
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function resetInterval() { if(slideInterval) clearInterval(slideInterval); slideInterval = setInterval(nextSlide, 5000); }
+
+    buildSlides();
+    resetInterval();
+
+    // ---------- Hamburger Menu ----------
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // ---------- Contact Form Demo + Store Message (no backend but logs) ----------
+    const contactForm = document.getElementById('contactForm');
+    const feedback = document.getElementById('formFeedback');
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const msg = document.getElementById('message').value;
+        if(!name || !email) {
+            feedback.innerHTML = '<span style="color:red;">Please fill required fields.</span>';
+            return;
+        }
+        feedback.innerHTML = '<span style="color:green;">✅ Thank you! Our team will contact you shortly.</span>';
+        contactForm.reset();
+        setTimeout(() => { feedback.innerHTML = ''; }, 4000);
+        // log to console (simulate)
+        console.log(`Inquiry from ${name}, ${email}, Message: ${msg}`);
+    });
+
+    // back to top button
+    const backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 500) backBtn.classList.add('show');
+        else backBtn.classList.remove('show');
+    });
+    backBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // image fallback for layout plan: if missing show placeholder but already handled
+    // add active nav highlight on scroll
+    const sections = document.querySelectorAll('section[id], div[id="layout"]');
+    window.addEventListener('scroll', () => {
+        let scrollPos = window.scrollY + 150;
+        sections.forEach(sec => {
+            const offsetTop = sec.offsetTop;
+            const height = sec.offsetHeight;
+            const id = sec.getAttribute('id');
+            if(scrollPos >= offsetTop && scrollPos < offsetTop + height && id) {
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === `#${id}`) link.classList.add('active');
+                });
+            }
+        });
+    });
+
+    // ---------- Additional: Click on layout plan to open full size in new tab? Optional ----------
+    const planImg = document.getElementById('layoutPlanImg');
+    if(planImg) {
+        planImg.style.cursor = 'pointer';
+        planImg.addEventListener('click', () => {
+            window.open(planImg.src, '_blank');
+        });
+    }
+
+    // Ensure flyer.jpeg is presented properly
+    console.log("Landcity Properties - Flyer advert loaded on start. Layout plan image present.");
+</script>
 </body>
 </html>
