@@ -53,7 +53,6 @@
                     <li><a href="#layout" class="nav-link">Layout Plan</a></li>
                     <li><a href="#team" class="nav-link">Team</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
-
                 </ul>
                 
                 <div id="hamburger" class="hamburger">
@@ -209,99 +208,31 @@
         </div>
     </section>
 
-<!-- ========== TEAM SECTION ========== -->
-<section id="team" class="section bg-light">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-subtitle">Our Experts</span>
-            <h2>Meet Our Team</h2>
-            <div class="section-divider"></div>
-        </div>
-        
-        <div class="team-grid" id="dynamicTeam">
-            <!-- Team Member 1: Chairman/CEO -->
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="assets/logo.jpeg" alt="Umar Muhammad Ibrahim" onerror="this.src='https://placehold.co/130x130?text=UMI'">
-                </div>
-                <h3>Umar Muhammad Ibrahim</h3>
-                <span class="team-role">Chairman/CEO</span>
-                <p>Visionary leader with 20+ years in real estate development</p>
-                <div class="team-contact">
-                    <a href="https://wa.me/2348036867775?text=Hello%20Umar%20Muhammad%20Ibrahim" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-whatsapp"></i> +234 803 686 7775
-                    </a>
-                    <a href="tel:+2349113668055">
-                        <i class="fas fa-phone"></i> +234 911 366 8055
-                    </a>
-                    <a href="mailto:umarmuhdib@gmail.com">
-                        <i class="fas fa-envelope"></i> umarmuhdib@gmail.com
-                    </a>
-                </div>
+    <!-- ========== TEAM SECTION (Dynamic from API) ========== -->
+    <section id="team" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Our Experts</span>
+                <h2>Meet Our Team</h2>
+                <div class="section-divider"></div>
             </div>
-
-            <!-- Team Member 2: Managing Director -->
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="assets/logo.jpeg" alt="Sadiq Musa Muhammad" onerror="this.src='https://placehold.co/130x130?text=SMM'">
-                </div>
-                <h3>Sadiq Musa Muhammad</h3>
-                <span class="team-role">Managing Director</span>
-                <p>Expert in property negotiations and daily operations management</p>
-                <div class="team-contact">
-                    <a href="https://wa.me/2349067057443?text=Hello%20Sadiq%20Musa%20Muhammad" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-whatsapp"></i> +234 906 705 7443
-                    </a>
-                    <a href="tel:+2349067057443">
-                        <i class="fas fa-phone"></i> +234 906 705 7443
-                    </a>
-                </div>
-            </div>
-
-            <!-- Team Member 3: Director of Sales & Marketing -->
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="assets/logo.jpeg" alt="Isyaku Sani Muhammad" onerror="this.src='https://placehold.co/130x130?text=ISM'">
-                </div>
-                <h3>Isyaku Sani Muhammad</h3>
-                <span class="team-role">Director of Sales & Marketing</span>
-                <p>Leading innovative sales strategies and marketing campaigns</p>
-                <div class="team-contact">
-                    <a href="https://wa.me/2347032306942?text=Hello%20Isyaku%20Sani%20Muhammad" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-whatsapp"></i> +234 703 230 6942
-                    </a>
-                    <a href="tel:+2347032306942">
-                        <i class="fas fa-phone"></i> +234 703 230 6942
-                    </a>
-                    <a href="mailto:ishaqsanimuhammad42@gmail.com">
-                        <i class="fas fa-envelope"></i> ishaqsanimuhammad42@gmail.com
-                    </a>
-                </div>
-            </div>
-
-            <!-- Team Member 4: Director of Finance & Admin -->
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="assets/logo.jpeg" alt="Auwal Aminu Hamisu" onerror="this.src='https://placehold.co/130x130?text=AAH'">
-                </div>
-                <h3>Auwal Aminu Hamisu</h3>
-                <span class="team-role">Director of Finance & Admin</span>
-                <p>Oversees financial operations, budgeting, and administration</p>
-                <div class="team-contact">
-                    <a href="https://wa.me/2347063818765?text=Hello%20Auwal%20Aminu%20Hamisu" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-whatsapp"></i> +234 706 381 8765
-                    </a>
-                    <a href="tel:+2347063818765">
-                        <i class="fas fa-phone"></i> +234 706 381 8765
-                    </a>
-                    <a href="mailto:auwalhamisu305@gmail.com">
-                        <i class="fas fa-envelope"></i> auwalhamisu305@gmail.com
-                    </a>
+            
+            <div class="team-grid" id="dynamicTeam">
+                <!-- Loading placeholder - will be replaced by API data -->
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="assets/logo.jpeg" alt="Loading..." onerror="this.src='https://placehold.co/130x130?text=Loading'">
+                    </div>
+                    <h3>Loading Team...</h3>
+                    <span class="team-role">Please wait</span>
+                    <p>Fetching team members from database...</p>
+                    <div class="team-contact">
+                        <a href="#"><i class="fas fa-spinner fa-spin"></i> Loading...</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="section">
@@ -444,21 +375,21 @@
 <!-- ========== SUPABASE CDN ========== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- ========== SUPABASE CONFIG ========== -->
+<!-- ========== SUPABASE CONFIG (Using correct URL from supabase-config.js) ========== -->
 <script>
-    // Supabase Configuration
     const landcitySupabase = (() => {
         try {
-            const supabaseUrl = 'https://fnxtexvjquilccthqlfa.supabase.co';
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZueHRleHZqcXVpbGNjdGhxbGZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNDkwNjcsImV4cCI6MjA1ODcyNTA2N30.pUqWXPZUPHfmNAao_Eg3YDbQY8gH4K0fgQ3_YhQZZfk';
+            const SUPABASE_URL = 'https://epjrvxbbppumrprofgbo.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwanJ2eGJicHB1bXJwcm9mZ2JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0Nzc4NzQsImV4cCI6MjA5MzA1Mzg3NH0.ZZXjP-aBI4cdgR0IHJOVPvQdkI42GNveNurxI40K4tE';
             
-            if (typeof supabase !== 'undefined') {
-                return supabase.createClient(supabaseUrl, supabaseKey);
+            if (typeof supabase !== 'undefined' && supabase.createClient) {
+                console.log('✅ Supabase client initialized');
+                return supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             }
-            console.warn('Supabase CDN not loaded yet');
+            console.warn('⚠️ Supabase CDN not loaded yet');
             return null;
         } catch (error) {
-            console.error('Supabase init error:', error);
+            console.error('❌ Supabase init error:', error);
             return null;
         }
     })();
@@ -513,21 +444,15 @@
     // ========== STICKY HEADER ==========
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            header?.classList.add('scrolled');
-        } else {
-            header?.classList.remove('scrolled');
-        }
+        if (window.scrollY > 100) header?.classList.add('scrolled');
+        else header?.classList.remove('scrolled');
     });
 
     // ========== BACK TO TOP ==========
     const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTop?.classList.add('visible');
-        } else {
-            backToTop?.classList.remove('visible');
-        }
+        if (window.scrollY > 500) backToTop?.classList.add('visible');
+        else backToTop?.classList.remove('visible');
     });
     backToTop?.addEventListener('click', (e) => {
         e.preventDefault();
@@ -548,7 +473,6 @@
 
     function buildSlides() {
         if (!slidesContainer || !dotsContainer) return;
-        
         slidesContainer.innerHTML = '';
         dotsContainer.innerHTML = '';
         
@@ -735,17 +659,14 @@
             e.preventDefault();
             const emailInput = this.querySelector('input[name="email"]');
             const email = emailInput?.value?.trim();
-            
             if (!email) return;
             
             const supabaseClient = getSupabase();
-            
             if (supabaseClient) {
                 try {
                     const { error } = await supabaseClient
                         .from('newsletter_subscribers')
                         .insert([{ email: email }]);
-                    
                     if (error && error.code !== '23505') {
                         console.error('Newsletter error:', error);
                     }
@@ -764,64 +685,93 @@
         });
     }
 
-    // ========== LOAD DYNAMIC TEAM FROM SUPABASE ==========
+    // ========== LOAD TEAM FROM SUPABASE API ==========
     async function loadTeam() {
-        const supabaseClient = getSupabase();
         const teamGrid = document.getElementById('dynamicTeam');
+        if (!teamGrid) {
+            console.log('❌ Team grid not found');
+            return;
+        }
         
-        if (!supabaseClient || !teamGrid) {
-            console.log('Team: Supabase or team grid not available');
+        const supabaseClient = getSupabase();
+        
+        // If Supabase is not available, keep the loading state
+        if (!supabaseClient) {
+            console.log('⚠️ Supabase not available - keeping loading state');
             return;
         }
         
         try {
+            console.log('🔄 Fetching team members from Supabase...');
             const { data: teamMembers, error } = await supabaseClient
                 .from('team_members')
                 .select('*')
                 .order('display_order', { ascending: true });
             
-            console.log('Team members from DB:', teamMembers);
+            if (error) {
+                console.error('❌ Supabase error:', error.message);
+                teamGrid.innerHTML = `<div class="team-card empty-state">
+                    <div class="team-avatar"><img src="assets/logo.jpeg" alt="Error"></div>
+                    <h3>Error Loading Team</h3>
+                    <span class="team-role">Database Error</span>
+                    <p>${error.message}</p>
+                </div>`;
+                return;
+            }
             
-            if (!error && teamMembers && teamMembers.length > 0) {
+            console.log('✅ Team members loaded:', teamMembers?.length || 0, teamMembers);
+            
+            if (teamMembers && teamMembers.length > 0) {
                 teamGrid.innerHTML = teamMembers.map(member => `
                     <div class="team-card">
                         <div class="team-avatar">
                             <img src="${member.image_url || 'assets/logo.jpeg'}" 
                                  alt="${member.name}" 
-                                 onerror="this.src='assets/logo.jpeg'">
+                                 onerror="this.src='assets/logo.jpeg'"
+                                 loading="lazy">
                         </div>
                         <h3>${member.name}</h3>
                         <span class="team-role">${member.position}</span>
                         ${member.bio ? `<p>${member.bio}</p>` : ''}
                         <div class="team-contact">
-                            ${member.whatsapp ? `<a href="https://wa.me/${member.whatsapp.replace(/\+/g, '')}?text=Hello%20${encodeURIComponent(member.name)}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> ${member.whatsapp}</a>` : ''}
-                            ${!member.whatsapp && member.phone ? `<a href="tel:${member.phone}"><i class="fas fa-phone"></i> ${member.phone}</a>` : ''}
-                            ${member.email ? `<a href="mailto:${member.email}"><i class="fas fa-envelope"></i> ${member.email}</a>` : ''}
+                            ${member.whatsapp ? `
+                                <a href="https://wa.me/${member.whatsapp.replace(/[\+\s\-\(\)]/g, '')}?text=Hello%20${encodeURIComponent(member.name)}" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   aria-label="Chat on WhatsApp">
+                                    <i class="fab fa-whatsapp"></i> ${member.whatsapp}
+                                </a>` : ''}
+                            ${member.phone ? `
+                                <a href="tel:${member.phone}" aria-label="Call">
+                                    <i class="fas fa-phone"></i> ${member.phone}
+                                </a>` : ''}
+                            ${member.email ? `
+                                <a href="mailto:${member.email}" aria-label="Send email">
+                                    <i class="fas fa-envelope"></i> ${member.email}
+                                </a>` : ''}
                         </div>
                     </div>
                 `).join('');
                 
-                // Re-observe new team cards for animation
+                // Re-observe for animations
                 setTimeout(() => observeElements(), 100);
             } else {
-                // Show empty state
                 teamGrid.innerHTML = `
                     <div class="team-card empty-state">
                         <div class="team-avatar">
-                            <img src="assets/logo.jpeg" alt="Team" onerror="this.src='https://placehold.co/130x130?text=Team'">
+                            <img src="assets/logo.jpeg" alt="No Team" onerror="this.src='https://placehold.co/130x130?text=Team'">
                         </div>
                         <h3>No Team Members Yet</h3>
                         <span class="team-role">Coming Soon</span>
                         <p>Team members will appear here once added from the admin panel.</p>
-                    </div>
-                `;
+                    </div>`;
             }
         } catch (error) {
-            console.log('Team not loaded from DB:', error.message);
+            console.error('❌ Error loading team:', error);
         }
     }
 
-    // ========== LOAD DYNAMIC GALLERY ==========
+    // ========== LOAD GALLERY FROM SUPABASE ==========
     async function loadGallery() {
         const supabaseClient = getSupabase();
         const galleryGrid = document.getElementById('dynamicGallery');
@@ -838,7 +788,7 @@
             if (!error && properties && properties.length > 0) {
                 galleryGrid.innerHTML = properties.map(p => `
                     <div class="gallery-item">
-                        <img src="assets/real-estate.webp" alt="${p.plot_number}" onerror="this.src='assets/logo.jpeg'">
+                        <img src="assets/real-estate.webp" alt="${p.plot_number}" onerror="this.src='assets/logo.jpeg'" loading="lazy">
                         <div class="gallery-overlay">
                             <h4>${p.plot_number || 'Property'}</h4>
                             <p>${p.location || 'Kano State'}</p>
@@ -846,6 +796,7 @@
                         </div>
                     </div>
                 `).join('');
+                observeElements();
             }
         } catch (error) {
             console.log('Gallery not loaded from DB:', error.message);
@@ -854,14 +805,20 @@
 
     // ========== INITIALIZE ==========
     function initDynamicContent() {
-        console.log('Initializing dynamic content...');
-        loadGallery();
+        console.log('🚀 Initializing dynamic content...');
+        
+        // Load team immediately
         loadTeam();
         
-        // Retry after Supabase fully loads
+        // Load gallery
+        loadGallery();
+        
+        // Retry after Supabase fully loads (in case CDN was slow)
         setTimeout(() => {
-            loadGallery();
-            loadTeam();
+            if (getSupabase()) {
+                loadTeam();
+                loadGallery();
+            }
         }, 2000);
         
         // Observe elements for animations
@@ -875,7 +832,7 @@
         initDynamicContent();
     }
 
-    console.log('Landcity Properties - Website Initialized');
+    console.log('✅ Landcity Properties - Website Initialized');
 })();
 </script>
 </body>

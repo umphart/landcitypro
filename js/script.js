@@ -285,11 +285,8 @@ async function loadGallery() {
         console.log('Gallery not loaded from DB:', error.message);
     }
 }
-
-    // ========== LOAD DYNAMIC TEAM FROM DATABASE ==========
 // ========== LOAD DYNAMIC TEAM FROM SUPABASE ==========
 async function loadTeam() {
-    const supabaseClient = getSupabase();
     const teamGrid = document.getElementById('dynamicTeam');
     
     if (!teamGrid) {
@@ -297,10 +294,12 @@ async function loadTeam() {
         return;
     }
     
+    const supabaseClient = getSupabase();
+    
     // Check if Supabase is available
     if (!supabaseClient) {
-        console.log('Supabase not available - using fallback team data');
-        loadFallbackTeam();
+        console.log('Supabase not available - using hardcoded team data');
+        showHardcodedTeam();
         return;
     }
     
@@ -313,24 +312,119 @@ async function loadTeam() {
         
         if (error) {
             console.error('Supabase error:', error);
-            loadFallbackTeam();
+            showHardcodedTeam();
             return;
         }
         
-        console.log('Team members loaded:', teamMembers?.length || 0);
+        console.log('Team members loaded:', teamMembers);
         
         if (teamMembers && teamMembers.length > 0) {
             renderTeamMembers(teamMembers);
         } else {
             console.log('No team members found in database');
-            loadFallbackTeam();
+            showHardcodedTeam();
         }
     } catch (error) {
         console.error('Error loading team:', error);
-        loadFallbackTeam();
+        showHardcodedTeam();
     }
 }
 
+// Render team members from data
+function renderTeamMembers(members) {
+    const teamGrid = document.getElementById('dynamicTeam');
+    if (!teamGrid) return;
+    
+    teamGrid.innerHTML = members.map(member => `
+        <div class="team-card">
+            <div class="team-avatar">
+                <img src="${member.image_url || 'assets/logo.jpeg'}" 
+                     alt="${member.name}" 
+                     onerror="this.src='assets/logo.jpeg'"
+                     loading="lazy">
+            </div>
+            <h3>${member.name}</h3>
+            <span class="team-role">${member.position}</span>
+            ${member.bio ? `<p>${member.bio}</p>` : ''}
+            <div class="team-contact">
+                ${member.whatsapp ? `
+                    <a href="https://wa.me/${formatPhone(member.whatsapp)}?text=Hello%20${encodeURIComponent(member.name)}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Chat on WhatsApp">
+                        <i class="fab fa-whatsapp"></i> ${member.whatsapp}
+                    </a>` : ''}
+                ${member.phone && !member.whatsapp ? `
+                    <a href="tel:${member.phone}" aria-label="Call">
+                        <i class="fas fa-phone"></i> ${member.phone}
+                    </a>` : ''}
+                ${member.email ? `
+                    <a href="mailto:${member.email}" aria-label="Send email">
+                        <i class="fas fa-envelope"></i> ${member.email}
+                    </a>` : ''}
+            </div>
+        </div>
+    `).join('');
+    
+    // Re-observe for animations
+    setTimeout(() => observeElements(), 100);
+}
+
+// Format phone number for WhatsApp (remove + and spaces)
+function formatPhone(phone) {
+    return phone.replace(/[\+\s\-\(\)]/g, '');
+}
+
+// Fallback hardcoded team (same as your database)
+function showHardcodedTeam() {
+    const hardcodedTeam = [
+        {
+            name: "Umar Muhammad Ibrahim",
+            position: "Chairman/CEO",
+            bio: "Visionary leader with 20+ years in real estate development",
+            phone: "+2349113668055",
+            whatsapp: "+2348036867775",
+            email: "umarmuhdib@gmail.com",
+            image_url: "assets/logo.jpeg",
+            display_order: 1
+        },
+        {
+            name: "Sadiq Musa Muhammad",
+            position: "Managing Director",
+            bio: "Expert in property negotiations and daily operations management",
+            phone: "+2349067057443",
+            whatsapp: "+2349067057443",
+            email: null,
+            image_url: "assets/logo.jpeg",
+            display_order: 2
+        },
+        {
+            name: "Isyaku Sani Muhammad",
+            position: "Director of Sales & Marketing",
+            bio: "Leading innovative sales strategies and marketing campaigns",
+            phone: "+2347032306942",
+            whatsapp: "+2347032306942",
+            email: "ishaqsanimuhammad42@gmail.com",
+            image_url: "assets/logo.jpeg",
+            display_order: 3
+        },
+        {
+            name: "Auwal Aminu Hamisu",
+            position: "Director of Finance & Admin",
+            bio: "Oversees financial operations, budgeting, and administration",
+            phone: "+2347063818765",
+            whatsapp: "+2347063818765",
+            email: "auwalhamisu305@gmail.com",
+            image_url: "assets/logo.jpeg",
+            display_order: 4
+        }
+    ];
+    
+    console.log('Loading hardcoded team data');
+    // Sort by display_order
+    hardcodedTeam.sort((a, b) => a.display_order - b.display_order);
+    renderTeamMembers(hardcodedTeam);
+}
 function renderTeamMembers(members) {
     const teamGrid = document.getElementById('dynamicTeam');
     if (!teamGrid) return;
