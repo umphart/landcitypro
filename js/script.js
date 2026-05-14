@@ -240,90 +240,183 @@
         }
     }
 
-    // ========== LOAD DYNAMIC GALLERY ==========
-    async function loadGallery() {
-        const supabaseClient = getSupabase();
-        const galleryGrid = document.getElementById('dynamicGallery');
-        if (!supabaseClient || !galleryGrid) return;
-        
-        try {
-            const { data: properties, error } = await supabaseClient
-                .from('properties')
-                .select('*')
-                .eq('status', 'available')
-                .limit(6)
-                .order('created_at', { ascending: false });
-            
-            if (!error && properties && properties.length > 0) {
-                galleryGrid.innerHTML = properties.map(p => `
-                    <div class="gallery-item">
-                        <img src="assets/real-estate.webp" alt="${p.plot_number}" onerror="this.src='assets/logo.jpeg'">
-                        <div class="gallery-overlay">
-                            <h4>${p.plot_number || 'Property'}</h4>
-                            <p>${p.location || 'Kano State'}</p>
-                            <p class="gallery-price">₦${Number(p.price || 0).toLocaleString()}</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        } catch (error) {
-            console.log('Gallery not loaded from DB:', error.message);
-        }
+// ========== LOAD DYNAMIC GALLERY ==========
+async function loadGallery() {
+    const supabaseClient = getSupabase();
+    const galleryGrid = document.getElementById('dynamicGallery');
+    
+    if (!galleryGrid) return;
+    
+    // Keep default images if Supabase is not available
+    if (!supabaseClient) {
+        console.log('Gallery: Supabase not available - using static images');
+        return;
     }
-
-    // ========== LOAD DYNAMIC TEAM FROM DATABASE ==========
-    async function loadTeam() {
-        const supabaseClient = getSupabase();
-        const teamGrid = document.getElementById('dynamicTeam');
-        if (!supabaseClient || !teamGrid) {
-            console.log('Team: Supabase or team grid not available');
+    
+    try {
+        console.log('Fetching gallery from Supabase...');
+        const { data: properties, error } = await supabaseClient
+            .from('properties')
+            .select('*')
+            .eq('status', 'available')
+            .limit(6)
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Gallery error:', error);
             return;
         }
         
-        try {
-            const { data: teamMembers, error } = await supabaseClient
-                .from('team_members')
-                .select('*')
-                .order('display_order', { ascending: true });
-            
-            console.log('Team members from DB:', teamMembers);
-            
-            if (!error && teamMembers && teamMembers.length > 0) {
-                teamGrid.innerHTML = teamMembers.map(member => `
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <img src="${member.image_url || 'assets/logo.jpeg'}" 
-                                 alt="${member.name}" 
-                                 onerror="this.src='assets/logo.jpeg'">
-                        </div>
-                        <h3>${member.name}</h3>
-                        <span class="team-role">${member.position}</span>
-                        ${member.bio ? `<p>${member.bio}</p>` : ''}
-                        <div class="team-contact">
-                            ${member.whatsapp ? `<a href="https://wa.me/${member.whatsapp.replace(/\+/g, '')}?text=Hello%20${encodeURIComponent(member.name)}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> ${member.whatsapp}</a>` : ''}
-                            ${!member.whatsapp && member.phone ? `<a href="tel:${member.phone}"><i class="fas fa-phone"></i> ${member.phone}</a>` : ''}
-                            ${member.email ? `<a href="mailto:${member.email}"><i class="fas fa-envelope"></i> ${member.email}</a>` : ''}
-                        </div>
+        if (properties && properties.length > 0) {
+            galleryGrid.innerHTML = properties.map(p => `
+                <div class="gallery-item">
+                    <img src="assets/real-estate.webp" alt="${p.plot_number}" onerror="this.src='assets/logo.jpeg'" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>${p.plot_number || 'Property'}</h4>
+                        <p>${p.location || 'Kano State'}</p>
+                        <p class="gallery-price">₦${Number(p.price || 0).toLocaleString()}</p>
                     </div>
-                `).join('');
-                
-                // Re-observe new team cards for animation
-                setTimeout(() => observeElements(), 100);
-            } else {
-                // Keep the loading text or show a message
-                teamGrid.innerHTML = `
-                    <div class="team-card">
-                        <div class="team-avatar"><img src="assets/logo.jpeg" alt="Team"></div>
-                        <h3>No Team Members Yet</h3>
-                        <span class="team-role">Coming Soon</span>
-                        <p>Team members will appear here once added from the admin panel.</p>
-                    </div>
-                `;
-            }
-        } catch (error) {
-            console.log('Team not loaded from DB:', error.message);
+                </div>
+            `).join('');
+            
+            observeElements();
         }
+    } catch (error) {
+        console.log('Gallery not loaded from DB:', error.message);
     }
+}
+
+    // ========== LOAD DYNAMIC TEAM FROM DATABASE ==========
+// ========== LOAD DYNAMIC TEAM FROM SUPABASE ==========
+async function loadTeam() {
+    const supabaseClient = getSupabase();
+    const teamGrid = document.getElementById('dynamicTeam');
+    
+    if (!teamGrid) {
+        console.log('Team grid element not found');
+        return;
+    }
+    
+    // Check if Supabase is available
+    if (!supabaseClient) {
+        console.log('Supabase not available - using fallback team data');
+        loadFallbackTeam();
+        return;
+    }
+    
+    try {
+        console.log('Fetching team members from Supabase...');
+        const { data: teamMembers, error } = await supabaseClient
+            .from('team_members')
+            .select('*')
+            .order('display_order', { ascending: true });
+        
+        if (error) {
+            console.error('Supabase error:', error);
+            loadFallbackTeam();
+            return;
+        }
+        
+        console.log('Team members loaded:', teamMembers?.length || 0);
+        
+        if (teamMembers && teamMembers.length > 0) {
+            renderTeamMembers(teamMembers);
+        } else {
+            console.log('No team members found in database');
+            loadFallbackTeam();
+        }
+    } catch (error) {
+        console.error('Error loading team:', error);
+        loadFallbackTeam();
+    }
+}
+
+function renderTeamMembers(members) {
+    const teamGrid = document.getElementById('dynamicTeam');
+    if (!teamGrid) return;
+    
+    teamGrid.innerHTML = members.map(member => `
+        <div class="team-card">
+            <div class="team-avatar">
+                <img src="${member.image_url || 'assets/logo.jpeg'}" 
+                     alt="${member.name}" 
+                     onerror="this.src='assets/logo.jpeg'"
+                     loading="lazy">
+            </div>
+            <h3>${member.name}</h3>
+            <span class="team-role">${member.position}</span>
+            ${member.bio ? `<p>${member.bio}</p>` : ''}
+            <div class="team-contact">
+                ${member.whatsapp ? `
+                    <a href="https://wa.me/${member.whatsapp.replace(/\+/g, '')}?text=Hello%20${encodeURIComponent(member.name)}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Chat on WhatsApp">
+                        <i class="fab fa-whatsapp"></i> ${member.whatsapp}
+                    </a>` : ''}
+                ${!member.whatsapp && member.phone ? `
+                    <a href="tel:${member.phone}" aria-label="Call">
+                        <i class="fas fa-phone"></i> ${member.phone}
+                    </a>` : ''}
+                ${member.email ? `
+                    <a href="mailto:${member.email}" aria-label="Send email">
+                        <i class="fas fa-envelope"></i> ${member.email}
+                    </a>` : ''}
+            </div>
+        </div>
+    `).join('');
+    
+    // Re-observe for animations
+    setTimeout(() => observeElements(), 100);
+}
+
+function loadFallbackTeam() {
+    const teamGrid = document.getElementById('dynamicTeam');
+    if (!teamGrid) return;
+    
+    // Fallback team data (will be used if Supabase is unavailable)
+    const fallbackTeam = [
+        {
+            name: "Umar Muhammad Ibrahim",
+            position: "Chairman/CEO",
+            bio: "Visionary leader with 20+ years in real estate development",
+            phone: "+2349113668055",
+            whatsapp: "+2348036867775",
+            email: "umarmuhdib@gmail.com",
+            image_url: "assets/logo.jpeg"
+        },
+        {
+            name: "Sadiq Musa Muhammad",
+            position: "Managing Director",
+            bio: "Expert in property negotiations and daily operations management",
+            phone: "+2349067057443",
+            whatsapp: "+2349067057443",
+            email: null,
+            image_url: "assets/logo.jpeg"
+        },
+        {
+            name: "Isyaku Sani Muhammad",
+            position: "Director of Sales & Marketing",
+            bio: "Leading innovative sales strategies and marketing campaigns",
+            phone: "+2347032306942",
+            whatsapp: "+2347032306942",
+            email: "ishaqsanimuhammad42@gmail.com",
+            image_url: "assets/logo.jpeg"
+        },
+        {
+            name: "Auwal Aminu Hamisu",
+            position: "Director of Finance & Admin",
+            bio: "Oversees financial operations, budgeting, and administration",
+            phone: "+2347063818765",
+            whatsapp: "+2347063818765",
+            email: "auwalhamisu305@gmail.com",
+            image_url: "assets/logo.jpeg"
+        }
+    ];
+    
+    console.log('Loading fallback team data');
+    renderTeamMembers(fallbackTeam);
+}
 
     // ========== INITIALIZE DYNAMIC CONTENT ==========
     function initDynamicContent() {

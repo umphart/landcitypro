@@ -4,637 +4,554 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Landcity Properties | Premium Plots & Real Estate Kano</title>
-    <!-- Google Fonts & Font Awesome -->
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0f3b3b;
-            --gold: #b8860b;
-            --gold-light: #d4a843;
-            --dark: #1e293b;
-            --gray: #64748b;
-            --light: #f8fafc;
-            --white: #ffffff;
-            --shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-            --radius: 1.25rem;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--dark);
-            background: var(--white);
-            line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Advert Overlay (flyer) */
-        .ad-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: opacity 0.4s ease;
-        }
-        .ad-card {
-            max-width: 520px;
-            width: 90%;
-            background: #fff;
-            border-radius: 2rem;
-            overflow: hidden;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.4);
-            animation: fadeUp 0.4s ease;
-            cursor: default;
-            position: relative;
-        }
-        .ad-card img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .ad-close {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            border: none;
-            border-radius: 40px;
-            width: 36px;
-            height: 36px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: 0.2s;
-        }
-        .ad-close:hover {
-            background: var(--gold);
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: scale(0.95) translateY(20px);}
-            to { opacity: 1; transform: scale(1) translateY(0);}
-        }
-
-        /* Header & Nav */
-        .header {
-            position: sticky;
-            top: 0;
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            z-index: 1000;
-            padding: 0.8rem 0;
-        }
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
-        }
-        .logo span {
-            font-size: 1.5rem;
-            font-weight: 800;
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-        }
-        .logo span span {
-            color: var(--gold);
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        .nav-links a {
-            text-decoration: none;
-            font-weight: 500;
-            color: var(--dark);
-            transition: 0.2s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--gold);
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-        .hamburger span {
-            width: 28px;
-            height: 2px;
-            background: var(--primary);
-            transition: 0.3s;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            transition: 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: var(--gold);
-            color: white;
-            box-shadow: 0 8px 18px rgba(184,134,11,0.25);
-        }
-        .btn-primary:hover {
-            background: #9e7609;
-            transform: translateY(-2px);
-        }
-        .btn-outline {
-            border: 2px solid var(--gold);
-            background: transparent;
-            color: var(--gold);
-        }
-        .btn-outline:hover {
-            background: var(--gold);
-            color: white;
-        }
-
-        /* Hero with slides */
-        .hero-slider {
-            position: relative;
-            height: 88vh;
-            min-height: 550px;
-            background: var(--primary);
-            overflow: hidden;
-        }
-        .slides-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1s ease;
-            display: flex;
-            align-items: center;
-        }
-        .slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-        .slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(15,59,59,0.85) 0%, rgba(0,0,0,0.6) 100%);
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 650px;
-        }
-        .hero-content h1 {
-            font-size: 3.2rem;
-            margin-bottom: 1rem;
-        }
-        .hero-content h1 span {
-            color: var(--gold);
-        }
-        .hero-address {
-            display: flex;
-            gap: 8px;
-            margin: 1rem 0 1.5rem;
-            font-size: 0.9rem;
-        }
-        .slider-dots {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            z-index: 3;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .dot.active, .dot:hover {
-            background: var(--gold);
-            width: 28px;
-        }
-
-        /* Offer Banner (Installment plan) */
-        .offer-banner {
-            background: var(--primary);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        .offer-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-        .offer-card {
-            background: rgba(255,255,255,0.1);
-            padding: 1.2rem 2rem;
-            border-radius: 2rem;
-            backdrop-filter: blur(4px);
-        }
-        .offer-card h3 {
-            font-size: 1.9rem;
-            color: var(--gold);
-        }
-        .offer-card p {
-            font-size: 0.9rem;
-        }
-        .layout-plan-section {
-            padding: 4rem 0;
-            background: var(--light);
-            text-align: center;
-        }
-        .plan-img {
-            max-width: 100%;
-            border-radius: 1.5rem;
-            box-shadow: var(--shadow);
-            margin-top: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Services / Gallery etc */
-        .section {
-            padding: 5rem 0;
-        }
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        .section-title h2 {
-            font-size: 2.4rem;
-            color: var(--primary);
-        }
-        .section-title span {
-            background: rgba(184,134,11,0.1);
-            padding: 0.3rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            color: var(--gold);
-            font-weight: 600;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.8rem;
-        }
-        .gallery-item {
-            border-radius: 1.2rem;
-            overflow: hidden;
-            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
-            transition: 0.3s;
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            transition: 0.4s;
-        }
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        /* Contact form */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 2rem;
-        }
-        .info-card {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        form input, form select, form textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #ddd;
-            border-radius: 2rem;
-            margin-bottom: 1rem;
-            font-family: inherit;
-        }
-        footer {
-            background: var(--primary);
-            color: #ccc;
-            padding: 3rem 0 1rem;
-            margin-top: 2rem;
-        }
-        .footer-grid {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #25D366;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 99;
-            transition: 0.2s;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                background: white;
-                flex-direction: column;
-                text-align: center;
-                padding: 2rem;
-                transition: 0.3s;
-                box-shadow: 0 20px 30px rgba(0,0,0,0.1);
-            }
-            .nav-links.open {
-                left: 0;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            .offer-grid {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--gold);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: 0.2s;
-            z-index: 99;
-        }
-        .back-to-top.show {
-            opacity: 1;
-        }
-    </style>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- FLYER ADVERT ON PAGE LOAD -->
-<div id="advertOverlay" class="ad-overlay">
-    <div class="ad-card">
-        <button class="ad-close" id="closeAdBtn">✕</button>
-        <img src="assets/flyer.jpeg" alt="Special Offer - Landcity Properties" onerror="this.src='https://placehold.co/600x400?text=flyer.jpeg+not+found'">
+<!-- ========== PRELOADER ========== -->
+<div id="preloader" class="preloader">
+    <div class="loader">
+        <div class="loader-logo">
+            <img src="assets/logo.jpeg" alt="Landcity Logo" onerror="this.src='https://placehold.co/80x80?text=Logo'">
+        </div>
+        <div class="loader-circle"></div>
+        <h2>Landcity<span>.</span>Properties</h2>
     </div>
 </div>
 
-<header class="header">
-    <div class="container">
-        <div class="nav-wrapper">
-            <div class="logo">
-                <img src="assets/logo.jpeg" alt="logo" onerror="this.src='https://placehold.co/50x50?text=Logo'">
-                <span>Landcity<span>.</span>Properties</span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#layout">Layout Plan</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
+<!-- ========== FLYER ADVERT ========== -->
+<div id="advertOverlay" class="ad-overlay">
+    <div class="ad-card">
+        <button class="ad-close" id="closeAdBtn">✕</button>
+        <img src="assets/flyer.jpeg" alt="Special Offer - Landcity Properties" onerror="this.src='https://placehold.co/600x400?text=Flyer'">
+    </div>
+</div>
+
+<!-- ========== HEADER ========== -->
+<header id="header" class="header">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" class="logo">
+                    <img src="assets/logo.jpeg" alt="Landcity Logo" class="logo-img" onerror="this.src='https://placehold.co/50x50?text=Logo'">
+                    <span class="logo-text">Landcity<span>.</span>Properties</span>
+                </a>
+                
+                <ul id="nav-menu" class="nav-menu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                    <li><a href="#layout" class="nav-link">Layout Plan</a></li>
+                    <li><a href="#team" class="nav-link">Team</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="admin/" class="nav-link admin-link">Admin</a></li>
+                </ul>
+                
+                <div id="hamburger" class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
         </div>
-    </div>
+    </nav>
 </header>
 
+<!-- ========== MAIN CONTENT ========== -->
 <main>
-    <!-- HERO SLIDER SECTION -->
+    <!-- HERO SLIDER -->
     <section id="home" class="hero-slider">
-        <div class="slides-container" id="slidesContainer">
-            <!-- dynamic slides will be inserted but set background images from assets -->
-        </div>
+        <div class="slides-container" id="slidesContainer"></div>
         <div class="slider-dots" id="sliderDots"></div>
         <div class="container" style="position: absolute; bottom: 20%; left: 0; right: 0; z-index: 3;">
             <div class="hero-content">
                 <h1>Premium Properties in <span>Kano State</span></h1>
                 <p>Own your dream plot with flexible plans. 50x50 residential plots with full C of O processing.</p>
-                <div class="hero-address"><i class="fas fa-map-marker-alt"></i> Shop 76&75 Rahama Complex, Mariri, Kumbotso L.G</div>
-                <a href="#contact" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Schedule Site Visit</a>
+                <div class="hero-address">
+                    <i class="fas fa-map-marker-alt"></i> 
+                    Shop 76&75 Rahama Complex, Mariri, Kumbotso L.G
+                </div>
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-phone-alt"></i> Schedule Site Visit
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Installment Plan Offer -->
+    <!-- OFFER BANNER -->
     <div class="offer-banner">
         <div class="container">
             <h3>🔥 Easy Ownership Plans</h3>
             <div class="offer-grid">
-                <div class="offer-card"><h3>₦5,000,000</h3><p>Outright Payment (Cash)</p></div>
-                <div class="offer-card"><h3>₦5,500,000</h3><p>Installment Plan · 18 months</p><small>Low monthly payment</small></div>
+                <div class="offer-card">
+                    <h3>₦5,000,000</h3>
+                    <p>Outright Payment (Cash)</p>
+                </div>
+                <div class="offer-card">
+                    <h3>₦5,500,000</h3>
+                    <p>Installment Plan · 18 months</p>
+                    <small>Low monthly payment</small>
+                </div>
             </div>
             <p style="margin-top: 1rem;">✓ 50x50 Plot | ✓ Clear Documentation | ✓ Perfect for Residential Builds</p>
         </div>
     </div>
 
-    <!-- About Section -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="section">
         <div class="container">
-            <div class="section-title"><span>Who we are</span><h2>About Landcity Properties</h2></div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 2rem;">
-                <div><img src="assets/banner.jpeg" alt="Office" style="border-radius: 1.5rem; width:100%;" onerror="this.src='https://placehold.co/400x300?text=Office'"></div>
-                <div><p>Landcity Properties Nigeria Limited is a trusted real estate firm located in Kumbotso L.G, Kano State. We specialize in selling verified plots, modern homes, and offer property management services. Our office at Rahama Shopping Complex provides easy access for clients across the metropolis.</p>
-                <div style="margin: 1rem 0;"><i class="fas fa-check-circle" style="color:var(--gold)"></i> 500+ Properties Sold &nbsp;&nbsp;<i class="fas fa-check-circle" style="color:var(--gold)"></i> 100% Legal Documentation</div>
-                <a href="#contact" class="btn btn-primary">Inquire Today</a></div>
+            <div class="section-header">
+                <span class="section-subtitle">Who We Are</span>
+                <h2>About Landcity Properties</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="assets/banner.jpeg" alt="Landcity Office" onerror="this.src='https://placehold.co/600x400?text=Office'">
+                </div>
+                <div class="about-text">
+                    <h3>Your Trusted Real Estate Partner in Kano</h3>
+                    <p>Landcity Properties Nigeria Limited is a trusted real estate firm located in Kumbotso L.G, Kano State. We specialize in selling verified plots, modern homes, and offer property management services.</p>
+                    <p>Our office at Rahama Shopping Complex provides easy access for clients across the metropolis.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i> 500+ Properties Sold
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i> 100% Legal Documentation
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn btn-primary">Inquire Today</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Services -->
-    <section id="services" class="section" style="background: var(--light);">
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section bg-light">
         <div class="container">
-            <div class="section-title"><span>What we offer</span><h2>Our Services</h2></div>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="assets/real-estate.webp" alt="Plots" onerror="this.src='https://placehold.co/400x240'"><div style="padding:1rem"><h3>Plot Sales</h3><p>Prime locations in Kano with full verification.</p></div></div>
-                <div class="gallery-item"><img src="assets/images (16).jpeg" alt="Homes"><div style="padding:1rem"><h3>Home Sales</h3><p>Ready-to-move luxury homes & villas.</p></div></div>
-                <div class="gallery-item"><img src="assets/images (17).jpeg" alt="Management"><div style="padding:1rem"><h3>Property Mgmt</h3><p>Maintenance, tenant management & more.</p></div></div>
+            <div class="section-header">
+                <span class="section-subtitle">What We Offer</span>
+                <h2>Our Services</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="assets/real-estate.webp" alt="Plot Sales" onerror="this.src='https://placehold.co/400x200?text=Plots'">
+                    <h3>Plot Sales</h3>
+                    <p>Prime locations in Kano with full verification and documentation.</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="assets/images (16).jpeg" alt="Home Sales" onerror="this.src='https://placehold.co/400x200?text=Homes'">
+                    <h3>Home Sales</h3>
+                    <p>Ready-to-move luxury homes & villas in premium locations.</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="assets/images (17).jpeg" alt="Property Management" onerror="this.src='https://placehold.co/400x200?text=Management'">
+                    <h3>Property Management</h3>
+                    <p>Maintenance, tenant management & property supervision.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- LAYOUT PLAN IMAGE (estate plan) -->
+    <!-- LAYOUT PLAN SECTION -->
     <section id="layout" class="layout-plan-section">
         <div class="container">
-            <div class="section-title"><span>Estate Layout</span><h2>Our Estate Master Plan</h2></div>
+            <div class="section-header">
+                <span class="section-subtitle">Estate Layout</span>
+                <h2>Our Estate Master Plan</h2>
+                <div class="section-divider"></div>
+            </div>
             <p>Approved layout plan — 50x50 residential plots with access roads and green areas.</p>
-            <img src="assets/layout plan.jpeg" alt="Estate Layout Plan" class="plan-img" id="layoutPlanImg" onerror="this.src='https://placehold.co/800x500?text=Layout+Plan+Image'">
+            <img src="assets/layout plan.jpeg" alt="Estate Layout Plan" class="plan-img" id="layoutPlanImg" onerror="this.src='https://placehold.co/800x500?text=Layout+Plan'">
         </div>
     </section>
 
-    <!-- Gallery with additional images -->
+    <!-- GALLERY SECTION -->
     <section id="gallery" class="section">
         <div class="container">
-            <div class="section-title"><span>Portfolio</span><h2>Property Gallery</h2></div>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="assets/images (18).jpeg" alt="Property"></div>
-                <div class="gallery-item"><img src="assets/Real-Estate.jpg" alt="Real Estate"></div>
-                <div class="gallery-item"><img src="assets/M8goDcwvY0rPUAS8.jpg" alt="Estate"></div>
-                <div class="gallery-item"><img src="assets/flyer.jpeg" alt="Promo Flyer"></div>
+            <div class="section-header">
+                <span class="section-subtitle">Portfolio</span>
+                <h2>Property Gallery</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="gallery-grid" id="dynamicGallery">
+                <div class="gallery-item">
+                    <img src="assets/images (18).jpeg" alt="Property" onerror="this.src='https://placehold.co/400x280?text=Property'">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/Real-Estate.jpg" alt="Real Estate" onerror="this.src='https://placehold.co/400x280?text=Real+Estate'">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/M8goDcwvY0rPUAS8.jpg" alt="Estate" onerror="this.src='https://placehold.co/400x280?text=Estate'">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/flyer.jpeg" alt="Promo Flyer" onerror="this.src='https://placehold.co/400x280?text=Flyer'">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact + Map etc -->
-    <section id="contact" class="section" style="background: var(--light);">
-        <div class="container">
-            <div class="section-title"><span>Get in touch</span><h2>Contact Us</h2></div>
-            <div class="contact-grid">
-                <div>
-                    <div class="info-card"><i class="fas fa-map-marker-alt" style="color: var(--gold); font-size:1.5rem;"></i> <strong>Address</strong><br>Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, Opp. Audu Manager Filling Station, Kumbotso L.G, Kano State.</div>
-                    <div class="info-card"><i class="fas fa-phone"></i> <strong>Phone</strong><br>+234 911 366 8055  |  +234 906 705 7443</div>
-                    <div class="info-card"><i class="fas fa-envelope"></i> <strong>Email</strong><br>info@lancitypropertiesnigltd.com</div>
+<!-- ========== TEAM SECTION ========== -->
+<section id="team" class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-subtitle">Our Experts</span>
+            <h2>Meet Our Team</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="team-grid" id="dynamicTeam">
+            <!-- Team Member 1: Chairman/CEO -->
+            <div class="team-card">
+                <div class="team-avatar">
+                    <img src="assets/logo.jpeg" alt="Umar Muhammad Ibrahim" onerror="this.src='https://placehold.co/130x130?text=UMI'">
                 </div>
-                <form id="contactForm">
-                    <input type="text" placeholder="Full Name" required id="name">
-                    <input type="email" placeholder="Email" required id="email">
-                    <input type="tel" placeholder="Phone" id="phone">
-                    <select id="interest">
-                        <option>Plot Purchase</option><option>Home Purchase</option><option>Installment Plan</option>
-                    </select>
-                    <textarea rows="3" placeholder="Your message..." id="message"></textarea>
-                    <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
-                    <div id="formFeedback" style="margin-top: 1rem; font-size:0.9rem;"></div>
+                <h3>Umar Muhammad Ibrahim</h3>
+                <span class="team-role">Chairman/CEO</span>
+                <p>Visionary leader with 20+ years in real estate development</p>
+                <div class="team-contact">
+                    <a href="https://wa.me/2348036867775?text=Hello%20Umar%20Muhammad%20Ibrahim" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> +234 803 686 7775
+                    </a>
+                    <a href="tel:+2349113668055">
+                        <i class="fas fa-phone"></i> +234 911 366 8055
+                    </a>
+                    <a href="mailto:umarmuhdib@gmail.com">
+                        <i class="fas fa-envelope"></i> umarmuhdib@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 2: Managing Director -->
+            <div class="team-card">
+                <div class="team-avatar">
+                    <img src="assets/logo.jpeg" alt="Sadiq Musa Muhammad" onerror="this.src='https://placehold.co/130x130?text=SMM'">
+                </div>
+                <h3>Sadiq Musa Muhammad</h3>
+                <span class="team-role">Managing Director</span>
+                <p>Expert in property negotiations and daily operations management</p>
+                <div class="team-contact">
+                    <a href="https://wa.me/2349067057443?text=Hello%20Sadiq%20Musa%20Muhammad" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> +234 906 705 7443
+                    </a>
+                    <a href="tel:+2349067057443">
+                        <i class="fas fa-phone"></i> +234 906 705 7443
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 3: Director of Sales & Marketing -->
+            <div class="team-card">
+                <div class="team-avatar">
+                    <img src="assets/logo.jpeg" alt="Isyaku Sani Muhammad" onerror="this.src='https://placehold.co/130x130?text=ISM'">
+                </div>
+                <h3>Isyaku Sani Muhammad</h3>
+                <span class="team-role">Director of Sales & Marketing</span>
+                <p>Leading innovative sales strategies and marketing campaigns</p>
+                <div class="team-contact">
+                    <a href="https://wa.me/2347032306942?text=Hello%20Isyaku%20Sani%20Muhammad" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> +234 703 230 6942
+                    </a>
+                    <a href="tel:+2347032306942">
+                        <i class="fas fa-phone"></i> +234 703 230 6942
+                    </a>
+                    <a href="mailto:ishaqsanimuhammad42@gmail.com">
+                        <i class="fas fa-envelope"></i> ishaqsanimuhammad42@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 4: Director of Finance & Admin -->
+            <div class="team-card">
+                <div class="team-avatar">
+                    <img src="assets/logo.jpeg" alt="Auwal Aminu Hamisu" onerror="this.src='https://placehold.co/130x130?text=AAH'">
+                </div>
+                <h3>Auwal Aminu Hamisu</h3>
+                <span class="team-role">Director of Finance & Admin</span>
+                <p>Oversees financial operations, budgeting, and administration</p>
+                <div class="team-contact">
+                    <a href="https://wa.me/2347063818765?text=Hello%20Auwal%20Aminu%20Hamisu" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> +234 706 381 8765
+                    </a>
+                    <a href="tel:+2347063818765">
+                        <i class="fas fa-phone"></i> +234 706 381 8765
+                    </a>
+                    <a href="mailto:auwalhamisu305@gmail.com">
+                        <i class="fas fa-envelope"></i> auwalhamisu305@gmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Get In Touch</span>
+                <h2>Contact Us</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Office Address</h4>
+                            <p>Shop No. 76&75 Rahama Shopping Complex, Mariri, Maiduguri Road, Opp. Audu Manager Filling Station, Kumbotso L.G, Kano State.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h4>Phone Numbers</h4>
+                            <p>+234 911 366 8055<br>+234 906 705 7443</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email Address</h4>
+                            <p>info@lancitypropertiesnigltd.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Full Name *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email Address *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <select name="service_type">
+                            <option value="">Select Service</option>
+                            <option value="plot">Plot Purchase</option>
+                            <option value="home">Home Purchase</option>
+                            <option value="installment">Installment Plan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="4" placeholder="Your Message *" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <div id="formMessage" style="display: none;"></div>
                 </form>
             </div>
         </div>
     </section>
 </main>
 
-<footer>
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
     <div class="container">
-        <div class="footer-grid">
-            <div><img src="assets/logo.jpeg" width="50" style="border-radius: 50%;"><p>Landcity Properties Nigeria Ltd<br>RC: 1234567</p></div>
-            <div><h4>Quick Links</h4><a href="#home" style="color:#ccc; display:block;">Home</a><a href="#about" style="color:#ccc;">About</a><a href="#layout" style="color:#ccc;">Layout Plan</a></div>
-            <div><h4>Legal</h4><p>Clear land title | Verified C of O | Flexible payment</p></div>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <img src="assets/logo.jpeg" alt="Landcity Logo" class="footer-logo-img" onerror="this.src='https://placehold.co/50x50?text=Logo'">
+                    <span>Landcity<span>.</span>Properties</span>
+                </a>
+                <p>Your trusted partner in premium real estate across Kano State. Verified plots, modern homes, and professional property management.</p>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Rahama Complex, Mariri, Kumbotso L.G</p>
+                    <p><i class="fas fa-phone-alt"></i> +234 911 366 8055</p>
+                    <p><i class="fas fa-envelope"></i> info@lancitypropertiesnigltd.com</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/+2349113668055" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#team">Our Team</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#services">Plot Sales</a></li>
+                    <li><a href="#services">Home Sales</a></li>
+                    <li><a href="#services">Property Management</a></li>
+                    <li><a href="#layout">Layout Plans</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h4>Newsletter</h4>
+                <p>Subscribe for latest property updates and offers.</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div id="newsletterMessage"></div>
+            </div>
         </div>
-        <hr style="margin: 2rem 0 1rem; border-color:#2d5a5a;">
-        <p style="text-align: center;">&copy; 2026 Landcity Properties. All rights reserved.</p>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Landcity Properties Nigeria Limited. All rights reserved.</p>
+        </div>
     </div>
 </footer>
 
-<!-- WhatsApp Floating -->
-<a href="https://wa.me/+2349113668055?text=Hello%20Landcity%20Properties,%20I%20am%20interested%20in%20your%20plot%20offer" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<!-- ========== FLOATING ELEMENTS ========== -->
+<a href="https://wa.me/+2349113668055?text=Hello%20Landcity%20Properties,%20I%20am%20interested%20in%20your%20plot%20offer" class="floating-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="tooltip">Chat with us!</span>
+</a>
 
-<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+<a href="#" id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+</a>
 
+<!-- ========== SUPABASE CDN ========== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- ========== SUPABASE CONFIG ========== -->
 <script>
-    // ---------- FLYER ADVERT CLOSE ----------
-    const advert = document.getElementById('advertOverlay');
-    const closeAd = document.getElementById('closeAdBtn');
-    if (closeAd) {
-        closeAd.addEventListener('click', () => {
-            advert.style.opacity = '0';
-            setTimeout(() => { advert.style.display = 'none'; }, 500);
+    // Supabase Configuration
+    const landcitySupabase = (() => {
+        try {
+            const supabaseUrl = 'https://fnxtexvjquilccthqlfa.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZueHRleHZqcXVpbGNjdGhxbGZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNDkwNjcsImV4cCI6MjA1ODcyNTA2N30.pUqWXPZUPHfmNAao_Eg3YDbQY8gH4K0fgQ3_YhQZZfk';
+            
+            if (typeof supabase !== 'undefined') {
+                return supabase.createClient(supabaseUrl, supabaseKey);
+            }
+            console.warn('Supabase CDN not loaded yet');
+            return null;
+        } catch (error) {
+            console.error('Supabase init error:', error);
+            return null;
+        }
+    })();
+</script>
+
+<!-- ========== MAIN JAVASCRIPT ========== -->
+<script>
+(function() {
+    'use strict';
+
+    // ========== PRELOADER ==========
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('hidden');
+            setTimeout(() => { preloader.style.display = 'none'; }, 500);
+        }
+    });
+
+    // ========== FLYER ADVERT ==========
+    const advertOverlay = document.getElementById('advertOverlay');
+    const closeAdBtn = document.getElementById('closeAdBtn');
+    if (advertOverlay && closeAdBtn) {
+        closeAdBtn.addEventListener('click', () => {
+            advertOverlay.style.opacity = '0';
+            setTimeout(() => { advertOverlay.style.display = 'none'; }, 500);
         });
-        // click on overlay also close
-        advert.addEventListener('click', (e) => {
-            if(e.target === advert) {
-                advert.style.opacity = '0';
-                setTimeout(() => { advert.style.display = 'none'; }, 500);
+        advertOverlay.addEventListener('click', (e) => {
+            if (e.target === advertOverlay) {
+                advertOverlay.style.opacity = '0';
+                setTimeout(() => { advertOverlay.style.display = 'none'; }, 500);
             }
         });
     }
 
-    // ---------- HERO SLIDES (using assets images as background) ----------
+    // ========== MOBILE NAVIGATION ==========
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // ========== STICKY HEADER ==========
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            header?.classList.add('scrolled');
+        } else {
+            header?.classList.remove('scrolled');
+        }
+    });
+
+    // ========== BACK TO TOP ==========
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop?.classList.add('visible');
+        } else {
+            backToTop?.classList.remove('visible');
+        }
+    });
+    backToTop?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ========== HERO SLIDER ==========
     const slidesData = [
         { bg: "assets/banner.jpeg", title: "Secure Your Future", desc: "Premium 50x50 plots" },
         { bg: "assets/images (16).jpeg", title: "Modern Homes", desc: "Ready to move" },
         { bg: "assets/real-estate.webp", title: "Prime Investment", desc: "High ROI locations" }
     ];
+    
     let currentSlide = 0;
+    let slideInterval;
     const slidesContainer = document.getElementById('slidesContainer');
     const dotsContainer = document.getElementById('sliderDots');
-    let slideInterval;
 
     function buildSlides() {
+        if (!slidesContainer || !dotsContainer) return;
+        
         slidesContainer.innerHTML = '';
         dotsContainer.innerHTML = '';
+        
         slidesData.forEach((slide, idx) => {
             const slideDiv = document.createElement('div');
             slideDiv.className = `slide ${idx === 0 ? 'active' : ''}`;
@@ -642,9 +559,10 @@
             slideDiv.style.backgroundSize = 'cover';
             slideDiv.style.backgroundPosition = 'center';
             slidesContainer.appendChild(slideDiv);
+            
             const dot = document.createElement('div');
             dot.classList.add('dot');
-            if(idx === 0) dot.classList.add('active');
+            if (idx === 0) dot.classList.add('active');
             dot.addEventListener('click', () => goToSlide(idx));
             dotsContainer.appendChild(dot);
         });
@@ -653,7 +571,8 @@
     function goToSlide(index) {
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
-        if(!slides.length) return;
+        if (!slides.length) return;
+        
         slides[currentSlide].classList.remove('active');
         dots[currentSlide].classList.remove('active');
         currentSlide = (index + slides.length) % slides.length;
@@ -663,79 +582,301 @@
     }
 
     function nextSlide() { goToSlide(currentSlide + 1); }
-    function resetInterval() { if(slideInterval) clearInterval(slideInterval); slideInterval = setInterval(nextSlide, 5000); }
+    
+    function resetInterval() {
+        if (slideInterval) clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+    }
 
     buildSlides();
     resetInterval();
 
-    // ---------- Hamburger Menu ----------
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-    });
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
-
-    // ---------- Contact Form Demo + Store Message (no backend but logs) ----------
-    const contactForm = document.getElementById('contactForm');
-    const feedback = document.getElementById('formFeedback');
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const msg = document.getElementById('message').value;
-        if(!name || !email) {
-            feedback.innerHTML = '<span style="color:red;">Please fill required fields.</span>';
-            return;
-        }
-        feedback.innerHTML = '<span style="color:green;">✅ Thank you! Our team will contact you shortly.</span>';
-        contactForm.reset();
-        setTimeout(() => { feedback.innerHTML = ''; }, 4000);
-        // log to console (simulate)
-        console.log(`Inquiry from ${name}, ${email}, Message: ${msg}`);
-    });
-
-    // back to top button
-    const backBtn = document.getElementById('backToTop');
+    // ========== ACTIVE NAV ON SCROLL ==========
+    const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
-        if(window.scrollY > 500) backBtn.classList.add('show');
-        else backBtn.classList.remove('show');
-    });
-    backBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // image fallback for layout plan: if missing show placeholder but already handled
-    // add active nav highlight on scroll
-    const sections = document.querySelectorAll('section[id], div[id="layout"]');
-    window.addEventListener('scroll', () => {
-        let scrollPos = window.scrollY + 150;
-        sections.forEach(sec => {
-            const offsetTop = sec.offsetTop;
-            const height = sec.offsetHeight;
-            const id = sec.getAttribute('id');
-            if(scrollPos >= offsetTop && scrollPos < offsetTop + height && id) {
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.classList.remove('active');
-                    if(link.getAttribute('href') === `#${id}`) link.classList.add('active');
-                });
+        let scrollY = window.pageYOffset + 150;
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop;
+            const sectionId = section.getAttribute('id');
+            const navLink = document.querySelector(`.nav-menu .nav-link[href="#${sectionId}"]`);
+            
+            if (navLink && scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                document.querySelectorAll('.nav-menu .nav-link').forEach(l => l.classList.remove('active'));
+                navLink.classList.add('active');
             }
         });
     });
 
-    // ---------- Additional: Click on layout plan to open full size in new tab? Optional ----------
+    // ========== SMOOTH SCROLL ==========
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ========== LAYOUT PLAN CLICK ==========
     const planImg = document.getElementById('layoutPlanImg');
-    if(planImg) {
-        planImg.style.cursor = 'pointer';
+    if (planImg) {
         planImg.addEventListener('click', () => {
             window.open(planImg.src, '_blank');
         });
     }
 
-    // Ensure flyer.jpeg is presented properly
-    console.log("Landcity Properties - Flyer advert loaded on start. Layout plan image present.");
+    // ========== ANIMATIONS OBSERVER ==========
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    function observeElements() {
+        document.querySelectorAll('.service-card, .gallery-item, .team-card, .mission-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    }
+
+    // ========== SUPABASE HELPERS ==========
+    function getSupabase() {
+        return (typeof landcitySupabase !== 'undefined') ? landcitySupabase : null;
+    }
+
+    function showFormMessage(msg, type) {
+        const formMessage = document.getElementById('formMessage');
+        if (!formMessage) return;
+        formMessage.textContent = msg;
+        formMessage.style.display = 'block';
+        formMessage.style.background = type === 'success' ? '#e8f5e9' : '#fef2f2';
+        formMessage.style.color = type === 'success' ? '#2e7d32' : '#dc2626';
+        formMessage.style.padding = '12px';
+        formMessage.style.borderRadius = '8px';
+        formMessage.style.textAlign = 'center';
+        formMessage.style.marginTop = '15px';
+        setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+    }
+
+    // ========== CONTACT FORM ==========
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = this.querySelector('input[name="name"]')?.value?.trim();
+            const email = this.querySelector('input[name="email"]')?.value?.trim();
+            const phone = this.querySelector('input[name="phone"]')?.value?.trim();
+            const serviceType = this.querySelector('select[name="service_type"]')?.value;
+            const message = this.querySelector('textarea[name="message"]')?.value?.trim();
+            
+            if (!name || !email || !message || !serviceType) {
+                showFormMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            const supabaseClient = getSupabase();
+            
+            try {
+                if (supabaseClient) {
+                    const { error } = await supabaseClient
+                        .from('inquiries')
+                        .insert([{
+                            name: name,
+                            email: email,
+                            phone: phone || null,
+                            service_type: serviceType,
+                            message: message,
+                            status: 'new'
+                        }]);
+                    
+                    if (error) {
+                        console.error('Supabase insert error:', error);
+                        showFormMessage('Thank you! Your message has been received.', 'success');
+                    } else {
+                        showFormMessage('Thank you! Your message has been sent successfully.', 'success');
+                    }
+                } else {
+                    console.log('Contact form submitted (offline):', { name, email, phone, serviceType, message });
+                    showFormMessage('Thank you! Your message has been received.', 'success');
+                }
+                contactForm.reset();
+            } catch (error) {
+                console.error('Form error:', error);
+                showFormMessage('Thank you! Your message has been received.', 'success');
+                contactForm.reset();
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // ========== NEWSLETTER ==========
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterMessage = document.getElementById('newsletterMessage');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[name="email"]');
+            const email = emailInput?.value?.trim();
+            
+            if (!email) return;
+            
+            const supabaseClient = getSupabase();
+            
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient
+                        .from('newsletter_subscribers')
+                        .insert([{ email: email }]);
+                    
+                    if (error && error.code !== '23505') {
+                        console.error('Newsletter error:', error);
+                    }
+                } catch (err) {
+                    console.error('Newsletter error:', err);
+                }
+            }
+            
+            if (newsletterMessage) {
+                newsletterMessage.textContent = '✓ Subscribed successfully!';
+                newsletterMessage.style.color = '#2e7d32';
+                newsletterMessage.style.fontSize = '12px';
+            }
+            emailInput.value = '';
+            setTimeout(() => { if (newsletterMessage) newsletterMessage.textContent = ''; }, 3000);
+        });
+    }
+
+    // ========== LOAD DYNAMIC TEAM FROM SUPABASE ==========
+    async function loadTeam() {
+        const supabaseClient = getSupabase();
+        const teamGrid = document.getElementById('dynamicTeam');
+        
+        if (!supabaseClient || !teamGrid) {
+            console.log('Team: Supabase or team grid not available');
+            return;
+        }
+        
+        try {
+            const { data: teamMembers, error } = await supabaseClient
+                .from('team_members')
+                .select('*')
+                .order('display_order', { ascending: true });
+            
+            console.log('Team members from DB:', teamMembers);
+            
+            if (!error && teamMembers && teamMembers.length > 0) {
+                teamGrid.innerHTML = teamMembers.map(member => `
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <img src="${member.image_url || 'assets/logo.jpeg'}" 
+                                 alt="${member.name}" 
+                                 onerror="this.src='assets/logo.jpeg'">
+                        </div>
+                        <h3>${member.name}</h3>
+                        <span class="team-role">${member.position}</span>
+                        ${member.bio ? `<p>${member.bio}</p>` : ''}
+                        <div class="team-contact">
+                            ${member.whatsapp ? `<a href="https://wa.me/${member.whatsapp.replace(/\+/g, '')}?text=Hello%20${encodeURIComponent(member.name)}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> ${member.whatsapp}</a>` : ''}
+                            ${!member.whatsapp && member.phone ? `<a href="tel:${member.phone}"><i class="fas fa-phone"></i> ${member.phone}</a>` : ''}
+                            ${member.email ? `<a href="mailto:${member.email}"><i class="fas fa-envelope"></i> ${member.email}</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Re-observe new team cards for animation
+                setTimeout(() => observeElements(), 100);
+            } else {
+                // Show empty state
+                teamGrid.innerHTML = `
+                    <div class="team-card empty-state">
+                        <div class="team-avatar">
+                            <img src="assets/logo.jpeg" alt="Team" onerror="this.src='https://placehold.co/130x130?text=Team'">
+                        </div>
+                        <h3>No Team Members Yet</h3>
+                        <span class="team-role">Coming Soon</span>
+                        <p>Team members will appear here once added from the admin panel.</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.log('Team not loaded from DB:', error.message);
+        }
+    }
+
+    // ========== LOAD DYNAMIC GALLERY ==========
+    async function loadGallery() {
+        const supabaseClient = getSupabase();
+        const galleryGrid = document.getElementById('dynamicGallery');
+        if (!supabaseClient || !galleryGrid) return;
+        
+        try {
+            const { data: properties, error } = await supabaseClient
+                .from('properties')
+                .select('*')
+                .eq('status', 'available')
+                .limit(6)
+                .order('created_at', { ascending: false });
+            
+            if (!error && properties && properties.length > 0) {
+                galleryGrid.innerHTML = properties.map(p => `
+                    <div class="gallery-item">
+                        <img src="assets/real-estate.webp" alt="${p.plot_number}" onerror="this.src='assets/logo.jpeg'">
+                        <div class="gallery-overlay">
+                            <h4>${p.plot_number || 'Property'}</h4>
+                            <p>${p.location || 'Kano State'}</p>
+                            <p class="gallery-price">₦${Number(p.price || 0).toLocaleString()}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        } catch (error) {
+            console.log('Gallery not loaded from DB:', error.message);
+        }
+    }
+
+    // ========== INITIALIZE ==========
+    function initDynamicContent() {
+        console.log('Initializing dynamic content...');
+        loadGallery();
+        loadTeam();
+        
+        // Retry after Supabase fully loads
+        setTimeout(() => {
+            loadGallery();
+            loadTeam();
+        }, 2000);
+        
+        // Observe elements for animations
+        observeElements();
+    }
+
+    // Start when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDynamicContent);
+    } else {
+        initDynamicContent();
+    }
+
+    console.log('Landcity Properties - Website Initialized');
+})();
 </script>
 </body>
 </html>
